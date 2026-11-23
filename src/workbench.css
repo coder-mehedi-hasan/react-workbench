@@ -58,8 +58,12 @@
 .wb *::after {
   box-sizing: border-box;
 }
-/* Zero specificity, so a host's own buttons in the slots keep their styles. */
-:where(.wb) :where(button) {
+/*
+ * Only the workbench's own buttons (every one has a `wb-` class). A host's
+ * buttons in the slots are left alone: a blanket `.wb button` reset would beat
+ * layered styles such as Tailwind's, whatever its specificity.
+ */
+.wb button[class*="wb-"] {
   font: inherit;
   color: inherit;
   background: none;
