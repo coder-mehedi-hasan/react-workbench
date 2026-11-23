@@ -1,0 +1,66 @@
+{
+  "name": "@coder-mehedi-hasan/react-workbench",
+  "version": "0.1.0",
+  "description": "A VS Code style workbench for React: activity bar, explorer, tabs, Monaco editor, problems panel and status bar.",
+  "type": "module",
+  "license": "MIT",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles.css": "./dist/react-workbench.css"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "prepublishOnly": "bun run build"
+  },
+  "peerDependencies": {
+    "@monaco-editor/react": ">=4.6.0",
+    "monaco-editor": ">=0.45.0",
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "@vscode/codicons": "0.0.36"
+  },
+  "devDependencies": {
+    "@monaco-editor/react": "4.7.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "monaco-editor": "0.52.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.9.3",
+    "vite": "^6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coder-mehedi-hasan/react-workbench.git"
+  },
+  "homepage": "https://github.com/coder-mehedi-hasan/react-workbench#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "react",
+    "vscode",
+    "monaco",
+    "editor",
+    "workbench",
+    "file-explorer"
+  ]
+}
