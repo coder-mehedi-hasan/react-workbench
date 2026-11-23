@@ -1,4 +1,4 @@
-# @coder-mehedi-hasan/react-workbench
+# @workbenchkit/react
 
 A VS Code style workbench for React: activity bar, explorer, tabs, a Monaco
 editor, a problems panel and a status bar. You give it a list of files and how
@@ -7,11 +7,9 @@ to read and save one; it keeps the open tabs, unsaved text and layout itself.
 ## Install
 
 ```bash
-bun add github:coder-mehedi-hasan/react-workbench
+bun add @workbenchkit/react
 bun add monaco-editor @monaco-editor/react   # peer dependencies, with react and react-dom
 ```
-
-The built files are committed, so installing from GitHub needs no build step.
 
 ## Develop
 
@@ -23,8 +21,8 @@ bun run build    # dist/index.js, dist/react-workbench.css, type declarations
 ## Use it
 
 ```tsx
-import { Workbench } from "@coder-mehedi-hasan/react-workbench";
-import "@coder-mehedi-hasan/react-workbench/styles.css";
+import { Workbench } from "@workbenchkit/react";
+import "@workbenchkit/react/styles.css";
 
 <div style={{ height: "100vh" }}>
   <Workbench
