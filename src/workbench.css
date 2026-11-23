@@ -58,7 +58,8 @@
 .wb *::after {
   box-sizing: border-box;
 }
-.wb button {
+/* Zero specificity, so a host's own buttons in the slots keep their styles. */
+:where(.wb) :where(button) {
   font: inherit;
   color: inherit;
   background: none;
