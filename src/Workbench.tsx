@@ -642,7 +642,7 @@ export const Workbench = forwardRef<WorkbenchHandle, WorkbenchProps>(
     }, [activePath, activeBuffer]);
 
     // Shortcuts work anywhere in the workbench, editor included.
-    const onKeyDownCapture = (event: React.KeyboardEvent) => {
+    const onKeyDownCapture = (event: React.KeyboardEvent | KeyboardEvent) => {
       if (!(event.metaKey || event.ctrlKey) || event.altKey) return;
       const key = event.key.toLowerCase();
       if (key === "s") {
@@ -661,6 +661,18 @@ export const Workbench = forwardRef<WorkbenchHandle, WorkbenchProps>(
         setPanelOpen((value) => !value);
       }
     };
+
+    // With nothing focused (a fresh page, the welcome screen) keys land on
+    // <body> and never reach the workbench, so pick them up from there too.
+    const shortcut = useRef(onKeyDownCapture);
+    shortcut.current = onKeyDownCapture;
+    useEffect(() => {
+      const onKeyDown = (event: KeyboardEvent) => {
+        if (event.target === document.body) shortcut.current(event);
+      };
+      document.addEventListener("keydown", onKeyDown);
+      return () => document.removeEventListener("keydown", onKeyDown);
+    }, []);
 
     // Unsaved text asks before the page goes away.
     const hasDirty = dirtyPaths.length > 0;
