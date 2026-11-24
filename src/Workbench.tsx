@@ -14,7 +14,7 @@ import {
 import { FileTree, type TreeEdit, type TreeFocus } from "./FileTree";
 import { defaultFileIcon, Icon } from "./Icon";
 import { Menu, tidyMenu, type MenuItem } from "./Menu";
-import { QuickOpen } from "./QuickOpen";
+import { QuickOpen, type QuickCommand } from "./QuickOpen";
 import type {
   Monaco,
   MonacoEditor,
@@ -112,7 +112,8 @@ export const Workbench = forwardRef<WorkbenchHandle, WorkbenchProps>(
     const [sideWidth, setSideWidth] = useState(260);
     const [panelOpen, setPanelOpen] = useState(false);
     const [panelHeight, setPanelHeight] = useState(200);
-    const [quickOpen, setQuickOpen] = useState(false);
+    /** What Go to File starts with: "" for files, ">" for commands. */
+    const [quickOpen, setQuickOpen] = useState<string | null>(null);
 
     const [openPaths, setOpenPaths] = useState<string[]>([]);
     const [activePath, setActivePath] = useState<string | null>(null);
@@ -652,7 +653,11 @@ export const Workbench = forwardRef<WorkbenchHandle, WorkbenchProps>(
       } else if (key === "p" && !event.shiftKey) {
         event.preventDefault();
         event.stopPropagation();
-        setQuickOpen(true);
+        setQuickOpen("");
+      } else if (key === "p") {
+        event.preventDefault();
+        event.stopPropagation();
+        setQuickOpen(">");
       } else if (key === "b") {
         event.preventDefault();
         setSideView((view) => (view ? null : EXPLORER));
@@ -673,6 +678,39 @@ export const Workbench = forwardRef<WorkbenchHandle, WorkbenchProps>(
       document.addEventListener("keydown", onKeyDown);
       return () => document.removeEventListener("keydown", onKeyDown);
     }, []);
+
+    /** The workbench's own commands, then everything the open editor can do. */
+    const commands = (): QuickCommand[] => {
+      const editor = editorRef.current;
+      return [
+        { id: "wb.save", label: "File: Save", run: () => void save() },
+        { id: "wb.saveAll", label: "File: Save All", run: () => void saveAll() },
+        {
+          id: "wb.sideBar",
+          label: "View: Toggle Side Bar",
+          run: () => setSideView((view) => (view ? null : EXPLORER)),
+        },
+        {
+          id: "wb.problems",
+          label: "View: Toggle Problems",
+          run: () => setPanelOpen((value) => !value),
+        },
+        ...(editor?.getSupportedActions() ?? [])
+          .filter((action) => action.label)
+          .map((action) => ({
+            id: action.id,
+            // Monaco's own palette, which shows each command's shortcut.
+            label:
+              action.id === "editor.action.quickCommand"
+                ? "Editor: Command Palette (F1)"
+                : action.label,
+            run: () => {
+              editor?.focus();
+              void action.run();
+            },
+          })),
+      ];
+    };
 
     // Unsaved text asks before the page goes away.
     const hasDirty = dirtyPaths.length > 0;
@@ -899,7 +937,7 @@ export const Workbench = forwardRef<WorkbenchHandle, WorkbenchProps>(
               type="button"
               className="wb-command-center"
               title={`Go to File (${MOD}P)`}
-              onClick={() => setQuickOpen(true)}
+              onClick={() => setQuickOpen("")}
             >
               <Icon name="search" />
               <span>{props.title ?? "Search files"}</span>
@@ -1335,14 +1373,17 @@ export const Workbench = forwardRef<WorkbenchHandle, WorkbenchProps>(
             onClose={() => setTabMenu(null)}
           />
         ) : null}
-        {quickOpen ? (
+        {quickOpen !== null ? (
           <QuickOpen
+            key={quickOpen}
+            start={quickOpen}
+            commands={commands()}
             files={files}
             recent={openPaths}
             icon={(path) => iconOf(path)}
             onOpen={(file) => open(file.path)}
             onClose={() => {
-              setQuickOpen(false);
+              setQuickOpen(null);
               // After the key that closed it is done, so it isn't typed.
               setTimeout(() => editorRef.current?.focus(), 0);
             }}
