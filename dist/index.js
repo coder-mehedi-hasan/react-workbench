@@ -1,7 +1,7 @@
-import { jsx as a, jsxs as d, Fragment as ge } from "react/jsx-runtime";
-import Yt from "@monaco-editor/react";
-import { useRef as R, useState as x, useEffect as z, useMemo as G, forwardRef as Vt, useCallback as V, useImperativeHandle as Gt } from "react";
-const E = (r) => r.split("/").pop() ?? r, _ = (r) => r.includes("/") ? r.slice(0, r.lastIndexOf("/")) : "", Xt = {
+import { jsx as a, jsxs as f, Fragment as ye } from "react/jsx-runtime";
+import Xt from "@monaco-editor/react";
+import { useRef as R, useState as P, useEffect as W, useMemo as V, forwardRef as Ht, useCallback as Q, useImperativeHandle as _t } from "react";
+const O = (r) => r.split("/").pop() ?? r, ee = (r) => r.includes("/") ? r.slice(0, r.lastIndexOf("/")) : "", Qt = {
   ts: "typescript",
   tsx: "typescript",
   js: "javascript",
@@ -24,54 +24,54 @@ const E = (r) => r.split("/").pop() ?? r, _ = (r) => r.includes("/") ? r.slice(0
   sh: "shell",
   sql: "sql"
 };
-function Ht(r) {
+function Jt(r) {
   var m;
-  const o = ((m = E(r).split(".").pop()) == null ? void 0 : m.toLowerCase()) ?? "";
-  return Xt[o] ?? "plaintext";
+  const o = ((m = O(r).split(".").pop()) == null ? void 0 : m.toLowerCase()) ?? "";
+  return Qt[o] ?? "plaintext";
 }
-function _t(r, o = []) {
-  const m = { path: "", name: "", children: [] }, h = /* @__PURE__ */ new Map([["", m]]), b = (c) => {
-    let w = m;
-    return c.forEach((i, p) => {
-      const k = c.slice(0, p + 1).join("/");
-      let P = h.get(k);
-      P || (P = { path: k, name: i, children: [] }, h.set(k, P), w.children.push(P)), w = P;
-    }), w;
+function Zt(r, o = []) {
+  const m = { path: "", name: "", children: [] }, h = /* @__PURE__ */ new Map([["", m]]), y = (i) => {
+    let b = m;
+    return i.forEach((d, w) => {
+      const N = i.slice(0, w + 1).join("/");
+      let C = h.get(N);
+      C || (C = { path: N, name: d, children: [] }, h.set(N, C), b.children.push(C)), b = C;
+    }), b;
   };
-  for (const c of o)
-    b(c.split("/").filter(Boolean));
-  for (const c of r) {
-    const w = c.path.split("/").filter(Boolean), i = w.pop();
-    i && b(w).children.push({ path: c.path, name: i, file: c });
+  for (const i of o)
+    y(i.split("/").filter(Boolean));
+  for (const i of r) {
+    const b = i.path.split("/").filter(Boolean), d = b.pop();
+    d && y(b).children.push({ path: i.path, name: d, file: i });
   }
-  const N = (c) => {
-    var w, i;
-    (w = c.children) == null || w.sort(
-      (p, k) => +!p.children - +!k.children || p.name.localeCompare(k.name)
-    ), (i = c.children) == null || i.forEach(N);
+  const D = (i) => {
+    var b, d;
+    (b = i.children) == null || b.sort(
+      (w, N) => +!w.children - +!N.children || w.name.localeCompare(N.name)
+    ), (d = i.children) == null || d.forEach(D);
   };
-  return N(m), m.children;
+  return D(m), m.children;
 }
-function Qt(r, o) {
+function St(r, o) {
   if (!r) return 0;
   const m = r.toLowerCase(), h = o.toLowerCase();
-  let b = 0, N = 0, c = -1;
-  for (const w of m) {
-    const i = h.indexOf(w, N);
-    if (i === -1) return null;
-    b += i === c + 1 ? 3 : 1, i >= h.lastIndexOf("/") + 1 && (b += 2), c = i, N = i + 1;
+  let y = 0, D = 0, i = -1;
+  for (const b of m) {
+    const d = h.indexOf(b, D);
+    if (d === -1) return null;
+    y += d === i + 1 ? 3 : 1, d >= h.lastIndexOf("/") + 1 && (y += 2), i = d, D = d + 1;
   }
-  return b - h.length / 100;
+  return y - h.length / 100;
 }
-function Pt(r) {
+function $t(r) {
   const o = /* @__PURE__ */ new Set();
   for (const m of r) {
     const h = m.split("/").filter(Boolean).slice(0, -1);
-    h.forEach((b, N) => o.add(h.slice(0, N + 1).join("/")));
+    h.forEach((y, D) => o.add(h.slice(0, D + 1).join("/")));
   }
   return o;
 }
-function v({ name: r, className: o }) {
+function x({ name: r, className: o }) {
   return /* @__PURE__ */ a(
     "span",
     {
@@ -80,7 +80,7 @@ function v({ name: r, className: o }) {
     }
   );
 }
-const Jt = {
+const en = {
   json: "json",
   md: "markdown",
   css: "symbol-color",
@@ -97,102 +97,102 @@ const Jt = {
   zip: "file-zip",
   pdf: "file-pdf"
 };
-function Zt(r, o) {
+function tn(r, o) {
   var h;
   if (o.folder)
-    return /* @__PURE__ */ a(v, { name: o.open ? "folder-opened" : "folder" });
-  const m = ((h = E(r).split(".").pop()) == null ? void 0 : h.toLowerCase()) ?? "";
-  return /* @__PURE__ */ a(v, { name: Jt[m] ?? "file-code" });
+    return /* @__PURE__ */ a(x, { name: o.open ? "folder-opened" : "folder" });
+  const m = ((h = O(r).split(".").pop()) == null ? void 0 : h.toLowerCase()) ?? "";
+  return /* @__PURE__ */ a(x, { name: en[m] ?? "file-code" });
 }
-function Re(r) {
+function je(r) {
   const o = [];
   for (const m of r)
     m && (m === "separator" && (!o.length || o[o.length - 1] === "separator") || o.push(m));
   for (; o[o.length - 1] === "separator"; ) o.pop();
   return o;
 }
-function $t({
+function Ot({
   x: r,
   y: o,
   items: m,
   onClose: h
 }) {
-  const b = R(null), [N, c] = x({ left: r, top: o });
-  z(() => {
-    var k;
-    const i = b.current;
-    if (i) {
-      const P = i.getBoundingClientRect();
-      c({
-        left: Math.max(4, Math.min(r, window.innerWidth - P.width - 4)),
-        top: Math.max(4, Math.min(o, window.innerHeight - P.height - 4))
-      }), (k = i.querySelector("button:not(:disabled)")) == null || k.focus();
+  const y = R(null), [D, i] = P({ left: r, top: o });
+  W(() => {
+    var N;
+    const d = y.current;
+    if (d) {
+      const C = d.getBoundingClientRect();
+      i({
+        left: Math.max(4, Math.min(r, window.innerWidth - C.width - 4)),
+        top: Math.max(4, Math.min(o, window.innerHeight - C.height - 4))
+      }), (N = d.querySelector("button:not(:disabled)")) == null || N.focus();
     }
-    const p = () => h();
-    return window.addEventListener("pointerdown", p), window.addEventListener("blur", p), window.addEventListener("resize", p), () => {
-      window.removeEventListener("pointerdown", p), window.removeEventListener("blur", p), window.removeEventListener("resize", p);
+    const w = () => h();
+    return window.addEventListener("pointerdown", w), window.addEventListener("blur", w), window.addEventListener("resize", w), () => {
+      window.removeEventListener("pointerdown", w), window.removeEventListener("blur", w), window.removeEventListener("resize", w);
     };
   }, [r, o, h]);
-  const w = (i) => {
-    var P, f;
-    const p = [
-      ...((P = b.current) == null ? void 0 : P.querySelectorAll("button:not(:disabled)")) ?? []
-    ], k = p.indexOf(document.activeElement);
-    (f = p[(k + i + p.length) % p.length]) == null || f.focus();
+  const b = (d) => {
+    var C, A;
+    const w = [
+      ...((C = y.current) == null ? void 0 : C.querySelectorAll("button:not(:disabled)")) ?? []
+    ], N = w.indexOf(document.activeElement);
+    (A = w[(N + d + w.length) % w.length]) == null || A.focus();
   };
   return /* @__PURE__ */ a(
     "div",
     {
-      ref: b,
+      ref: y,
       className: "wb-menu",
       role: "menu",
-      style: N,
-      onPointerDown: (i) => i.stopPropagation(),
-      onContextMenu: (i) => i.preventDefault(),
-      onKeyDown: (i) => {
-        i.stopPropagation(), i.key === "Escape" && h(), i.key === "ArrowDown" && (i.preventDefault(), w(1)), i.key === "ArrowUp" && (i.preventDefault(), w(-1));
+      style: D,
+      onPointerDown: (d) => d.stopPropagation(),
+      onContextMenu: (d) => d.preventDefault(),
+      onKeyDown: (d) => {
+        d.stopPropagation(), d.key === "Escape" && h(), d.key === "ArrowDown" && (d.preventDefault(), b(1)), d.key === "ArrowUp" && (d.preventDefault(), b(-1));
       },
       children: m.map(
-        (i, p) => i === "separator" ? /* @__PURE__ */ a("div", { className: "wb-menu-separator", role: "separator" }, p) : /* @__PURE__ */ d(
+        (d, w) => d === "separator" ? /* @__PURE__ */ a("div", { className: "wb-menu-separator", role: "separator" }, w) : /* @__PURE__ */ f(
           "button",
           {
             type: "button",
             role: "menuitem",
             className: "wb-menu-item",
-            disabled: i.disabled,
+            disabled: d.disabled,
             onClick: () => {
-              h(), i.run();
+              h(), d.run();
             },
             children: [
-              /* @__PURE__ */ a("span", { children: i.label }),
-              i.keys ? /* @__PURE__ */ a("span", { className: "wb-menu-keys", children: i.keys }) : null
+              /* @__PURE__ */ a("span", { children: d.label }),
+              d.keys ? /* @__PURE__ */ a("span", { className: "wb-menu-keys", children: d.keys }) : null
             ]
           },
-          i.label
+          d.label
         )
       )
     }
   );
 }
-const Be = "application/x-workbench-path", tt = "\0root";
-function Mt({
+const Ie = "application/x-workbench-path", nt = "\0root";
+function Ft({
   initial: r,
   onSubmit: o,
   onCancel: m
 }) {
-  const h = R(null), b = R(!1);
-  z(() => {
-    const c = h.current;
-    if (!c) return;
-    c.focus();
-    const w = r.lastIndexOf(".");
-    c.setSelectionRange(0, w > 0 ? w : r.length);
+  const h = R(null), y = R(!1);
+  W(() => {
+    const i = h.current;
+    if (!i) return;
+    i.focus();
+    const b = r.lastIndexOf(".");
+    i.setSelectionRange(0, b > 0 ? b : r.length);
   }, [r]);
-  const N = (c) => {
-    if (b.current) return;
-    b.current = !0;
-    const w = c == null ? void 0 : c.trim().replace(/^\/+|\/+$/g, "");
-    w && w !== r ? o(w) : m();
+  const D = (i) => {
+    if (y.current) return;
+    y.current = !0;
+    const b = i == null ? void 0 : i.trim().replace(/^\/+|\/+$/g, "");
+    b && b !== r ? o(b) : m();
   };
   return /* @__PURE__ */ a(
     "input",
@@ -201,95 +201,95 @@ function Mt({
       className: "wb-tree-input",
       defaultValue: r,
       spellCheck: !1,
-      onClick: (c) => c.stopPropagation(),
-      onContextMenu: (c) => c.stopPropagation(),
-      onBlur: (c) => N(c.target.value),
-      onKeyDown: (c) => {
-        c.stopPropagation(), c.key === "Enter" && N(c.currentTarget.value), c.key === "Escape" && N(null);
+      onClick: (i) => i.stopPropagation(),
+      onContextMenu: (i) => i.stopPropagation(),
+      onBlur: (i) => D(i.target.value),
+      onKeyDown: (i) => {
+        i.stopPropagation(), i.key === "Enter" && D(i.currentTarget.value), i.key === "Escape" && D(null);
       }
     }
   );
 }
-function en(r) {
-  const { files: o, edit: m, collapsed: h } = r, b = G(
-    () => _t(o, r.emptyFolders),
+function nn(r) {
+  const { files: o, edit: m, collapsed: h } = r, y = V(
+    () => Zt(o, r.emptyFolders),
     [o, r.emptyFolders]
-  ), [N, c] = x(null), [w, i] = x(null);
-  z(() => c(null), [r.activePath]);
-  const [p, k] = x(null), P = R(void 0), f = (l) => {
-    const y = [...l.dataTransfer.types];
-    return y.includes(Be) ? r.canMove : y.includes("Files") && r.canUpload;
-  }, M = (l, y) => {
-    if (!f(l)) return;
-    l.preventDefault(), l.stopPropagation(), l.dataTransfer.dropEffect = l.dataTransfer.types.includes(Be) ? "move" : "copy";
-    const u = y || tt;
-    u !== p && (k(u), clearTimeout(P.current), y && h.has(y) && (P.current = setTimeout(() => r.onToggle(y), 600)));
-  }, B = () => {
-    clearTimeout(P.current), k(null);
-  }, O = (l, y) => {
-    if (!f(l)) return;
-    l.preventDefault(), l.stopPropagation(), B();
-    const u = l.dataTransfer.getData(Be);
+  ), [D, i] = P(null), [b, d] = P(null);
+  W(() => i(null), [r.activePath]);
+  const [w, N] = P(null), C = R(void 0), A = (l) => {
+    const k = [...l.dataTransfer.types];
+    return k.includes(Ie) ? r.canMove : k.includes("Files") && r.canUpload;
+  }, Y = (l, k) => {
+    if (!A(l)) return;
+    l.preventDefault(), l.stopPropagation(), l.dataTransfer.dropEffect = l.dataTransfer.types.includes(Ie) ? "move" : "copy";
+    const u = k || nt;
+    u !== w && (N(u), clearTimeout(C.current), k && h.has(k) && (C.current = setTimeout(() => r.onToggle(k), 600)));
+  }, U = () => {
+    clearTimeout(C.current), N(null);
+  }, F = (l, k) => {
+    if (!A(l)) return;
+    l.preventDefault(), l.stopPropagation(), U();
+    const u = l.dataTransfer.getData(Ie);
     if (u) {
-      const j = y ? `${y}/${E(u)}` : E(u);
-      j !== u && r.onMove(u, j);
+      const I = k ? `${k}/${O(u)}` : O(u);
+      I !== u && r.onMove(u, I);
       return;
     }
-    const D = [...l.dataTransfer.files];
-    D.length && r.onDropFiles(D, y);
-  }, K = [], J = (l, y) => {
+    const M = [...l.dataTransfer.files];
+    M.length && r.onDropFiles(M, k);
+  }, j = [], G = (l, k) => {
     for (const u of l)
-      K.push({ node: u, depth: y }), u.children && !h.has(u.path) && J(u.children, y + 1);
+      j.push({ node: u, depth: k }), u.children && !h.has(u.path) && G(u.children, k + 1);
   };
-  J(b, 0);
-  const Z = (l) => {
-    c(l.path), r.onFocus({ path: l.path, folder: !!l.children });
-  }, ne = (l, y) => {
-    y && h.has(y) && r.onToggle(y), r.onEdit({ kind: "create", type: l, folder: y });
-  }, ae = (l, y) => {
+  G(y, 0);
+  const c = (l) => {
+    i(l.path), r.onFocus({ path: l.path, folder: !!l.children });
+  }, p = (l, k) => {
+    k && h.has(k) && r.onToggle(k), r.onEdit({ kind: "create", type: l, folder: k });
+  }, L = (l, k) => {
     if ((m == null ? void 0 : m.kind) !== "create" || m.folder !== l) return null;
     const { type: u } = m;
-    return /* @__PURE__ */ d(
+    return /* @__PURE__ */ f(
       "div",
       {
         className: "wb-tree-row",
-        style: { paddingLeft: 8 + y * 8 },
+        style: { paddingLeft: 8 + k * 8 },
         children: [
-          /* @__PURE__ */ a("span", { className: "wb-twistie", children: u === "folder" ? /* @__PURE__ */ a(v, { name: "chevron-right" }) : null }),
-          /* @__PURE__ */ a("span", { className: "wb-file-icon", children: /* @__PURE__ */ a(v, { name: u === "folder" ? "folder" : "file" }) }),
+          /* @__PURE__ */ a("span", { className: "wb-twistie", children: u === "folder" ? /* @__PURE__ */ a(x, { name: "chevron-right" }) : null }),
+          /* @__PURE__ */ a("span", { className: "wb-file-icon", children: /* @__PURE__ */ a(x, { name: u === "folder" ? "folder" : "file" }) }),
           /* @__PURE__ */ a(
-            Mt,
+            Ft,
             {
               initial: "",
               onCancel: () => r.onEdit(null),
-              onSubmit: (D) => r.onSubmitEdit(m, l ? `${l}/${D}` : D)
+              onSubmit: (M) => r.onSubmitEdit(m, l ? `${l}/${M}` : M)
             }
           )
         ]
       },
       `create:${l}`
     );
-  }, T = N ?? r.activePath;
-  return /* @__PURE__ */ d(
+  }, T = D ?? r.activePath;
+  return /* @__PURE__ */ f(
     "div",
     {
       className: "wb-tree",
       role: "tree",
       tabIndex: 0,
       onKeyDown: (l) => {
-        const y = K.findIndex(({ node: D }) => D.path === T), u = K[y];
+        const k = j.findIndex(({ node: M }) => M.path === T), u = j[k];
         if (l.key === "ArrowDown" || l.key === "ArrowUp") {
           l.preventDefault();
-          const D = K[y + (l.key === "ArrowDown" ? 1 : -1)] ?? K[0];
-          D && Z(D.node);
+          const M = j[k + (l.key === "ArrowDown" ? 1 : -1)] ?? j[0];
+          M && c(M.node);
         } else if (l.key === "ArrowRight" && (u != null && u.node.children))
           l.preventDefault(), h.has(u.node.path) && r.onToggle(u.node.path);
         else if (l.key === "ArrowLeft" && u)
           if (l.preventDefault(), u.node.children && !h.has(u.node.path))
             r.onToggle(u.node.path);
           else {
-            const D = K.find(({ node: j }) => j.path === _(u.node.path));
-            D && Z(D.node);
+            const M = j.find(({ node: I }) => I.path === ee(u.node.path));
+            M && c(M.node);
           }
         else if (l.key === "Enter" && u)
           l.preventDefault(), u.node.file ? r.onOpen(u.node.file) : r.onToggle(u.node.path);
@@ -298,74 +298,74 @@ function en(r) {
         else if ((l.key === "Delete" || l.key === "Backspace" && l.metaKey) && u)
           r.onShortcut("delete", u.node);
         else if ((l.metaKey || l.ctrlKey) && u) {
-          const D = { c: "copy", x: "cut", v: "paste" }[l.key.toLowerCase()];
-          D && (l.preventDefault(), r.onShortcut(D, u.node));
+          const M = { c: "copy", x: "cut", v: "paste" }[l.key.toLowerCase()];
+          M && (l.preventDefault(), r.onShortcut(M, u.node));
         }
       },
       onContextMenu: (l) => {
-        l.preventDefault(), c(null), r.onFocus(null), r.menuFor(null).length && i({ x: l.clientX, y: l.clientY, node: null });
+        l.preventDefault(), i(null), r.onFocus(null), r.menuFor(null).length && d({ x: l.clientX, y: l.clientY, node: null });
       },
-      "data-drop": p === tt,
-      onDragOver: (l) => M(l, ""),
+      "data-drop": w === nt,
+      onDragOver: (l) => Y(l, ""),
       onDragLeave: (l) => {
-        l.currentTarget.contains(l.relatedTarget) || B();
+        l.currentTarget.contains(l.relatedTarget) || U();
       },
-      onDrop: (l) => O(l, ""),
+      onDrop: (l) => F(l, ""),
       onClick: (l) => {
-        l.target === l.currentTarget && (c(null), r.onFocus(null));
+        l.target === l.currentTarget && (i(null), r.onFocus(null));
       },
       children: [
-        ae("", 0),
-        !K.length && !m ? /* @__PURE__ */ a("div", { className: "wb-empty", children: "No files yet." }) : null,
-        K.map(({ node: l, depth: y }) => {
-          const u = !!l.children, D = u && !h.has(l.path), j = (m == null ? void 0 : m.kind) === "rename" && m.path === l.path, Ne = !u && r.dirtyPaths.has(l.path), Ie = u ? void 0 : r.problemOf(l.path);
-          return /* @__PURE__ */ d("div", { children: [
-            /* @__PURE__ */ d(
+        L("", 0),
+        !j.length && !m ? /* @__PURE__ */ a("div", { className: "wb-empty", children: "No files yet." }) : null,
+        j.map(({ node: l, depth: k }) => {
+          const u = !!l.children, M = u && !h.has(l.path), I = (m == null ? void 0 : m.kind) === "rename" && m.path === l.path, ke = !u && r.dirtyPaths.has(l.path), Ae = u ? void 0 : r.problemOf(l.path);
+          return /* @__PURE__ */ f("div", { children: [
+            /* @__PURE__ */ f(
               "div",
               {
                 role: "treeitem",
                 "aria-selected": l.path === T,
-                "aria-expanded": u ? D : void 0,
+                "aria-expanded": u ? M : void 0,
                 className: "wb-tree-row",
-                "data-dirty": Ne,
-                "data-problem": Ie,
+                "data-dirty": ke,
+                "data-problem": Ae,
                 "data-cut": l.path === r.cutPath,
-                "data-drop": p !== null && p !== tt && (l.path === p || l.path.startsWith(`${p}/`)),
+                "data-drop": w !== null && w !== nt && (l.path === w || l.path.startsWith(`${w}/`)),
                 title: l.path,
-                style: { paddingLeft: 8 + y * 8 },
-                draggable: !!l.file && r.canMove && !j,
-                onDragStart: (C) => {
-                  C.dataTransfer.setData(Be, l.path), C.dataTransfer.setData("text/plain", l.path), C.dataTransfer.effectAllowed = "move";
+                style: { paddingLeft: 8 + k * 8 },
+                draggable: !!l.file && r.canMove && !I,
+                onDragStart: (v) => {
+                  v.dataTransfer.setData(Ie, l.path), v.dataTransfer.setData("text/plain", l.path), v.dataTransfer.effectAllowed = "move";
                 },
-                onDragEnd: B,
-                onDragOver: (C) => M(C, u ? l.path : _(l.path)),
-                onDrop: (C) => O(C, u ? l.path : _(l.path)),
+                onDragEnd: U,
+                onDragOver: (v) => Y(v, u ? l.path : ee(l.path)),
+                onDrop: (v) => F(v, u ? l.path : ee(l.path)),
                 onClick: () => {
-                  Z(l), l.file ? r.onOpen(l.file) : r.onToggle(l.path);
+                  c(l), l.file ? r.onOpen(l.file) : r.onToggle(l.path);
                 },
-                onContextMenu: (C) => {
-                  C.preventDefault(), C.stopPropagation(), Z(l), r.menuFor(l).length && i({ x: C.clientX, y: C.clientY, node: l });
+                onContextMenu: (v) => {
+                  v.preventDefault(), v.stopPropagation(), c(l), r.menuFor(l).length && d({ x: v.clientX, y: v.clientY, node: l });
                 },
                 children: [
-                  /* @__PURE__ */ a("span", { className: "wb-twistie", children: u ? /* @__PURE__ */ a(v, { name: D ? "chevron-down" : "chevron-right" }) : null }),
-                  /* @__PURE__ */ a("span", { className: "wb-file-icon", children: r.icon(l.path, { folder: u, open: D }) }),
-                  j ? /* @__PURE__ */ a(
-                    Mt,
+                  /* @__PURE__ */ a("span", { className: "wb-twistie", children: u ? /* @__PURE__ */ a(x, { name: M ? "chevron-down" : "chevron-right" }) : null }),
+                  /* @__PURE__ */ a("span", { className: "wb-file-icon", children: r.icon(l.path, { folder: u, open: M }) }),
+                  I ? /* @__PURE__ */ a(
+                    Ft,
                     {
                       initial: l.name,
                       onCancel: () => r.onEdit(null),
-                      onSubmit: (C) => {
-                        const le = _(l.path);
+                      onSubmit: (v) => {
+                        const ne = ee(l.path);
                         r.onSubmitEdit(
                           { kind: "rename", path: l.path },
-                          le ? `${le}/${C}` : C
+                          ne ? `${ne}/${v}` : v
                         );
                       }
                     }
-                  ) : /* @__PURE__ */ d(ge, { children: [
+                  ) : /* @__PURE__ */ f(ye, { children: [
                     /* @__PURE__ */ a("span", { className: "wb-tree-label", children: l.name }),
-                    Ne ? /* @__PURE__ */ a("span", { className: "wb-tree-badge", children: "M" }) : null,
-                    /* @__PURE__ */ d("span", { className: "wb-tree-actions", children: [
+                    ke ? /* @__PURE__ */ a("span", { className: "wb-tree-badge", children: "M" }) : null,
+                    /* @__PURE__ */ f("span", { className: "wb-tree-actions", children: [
                       u && r.canCreateFile ? /* @__PURE__ */ a(
                         "button",
                         {
@@ -373,10 +373,10 @@ function en(r) {
                           className: "wb-icon-button",
                           title: "New File…",
                           "aria-label": `New file in ${l.path}`,
-                          onClick: (C) => {
-                            C.stopPropagation(), ne("file", l.path);
+                          onClick: (v) => {
+                            v.stopPropagation(), p("file", l.path);
                           },
-                          children: /* @__PURE__ */ a(v, { name: "new-file" })
+                          children: /* @__PURE__ */ a(x, { name: "new-file" })
                         }
                       ) : null,
                       u && r.canCreateFolder ? /* @__PURE__ */ a(
@@ -386,10 +386,10 @@ function en(r) {
                           className: "wb-icon-button",
                           title: "New Folder…",
                           "aria-label": `New folder in ${l.path}`,
-                          onClick: (C) => {
-                            C.stopPropagation(), ne("folder", l.path);
+                          onClick: (v) => {
+                            v.stopPropagation(), p("folder", l.path);
                           },
-                          children: /* @__PURE__ */ a(v, { name: "new-folder" })
+                          children: /* @__PURE__ */ a(x, { name: "new-folder" })
                         }
                       ) : null,
                       l.file && r.canRename ? /* @__PURE__ */ a(
@@ -398,11 +398,11 @@ function en(r) {
                           type: "button",
                           className: "wb-icon-button",
                           title: "Rename… (F2)",
-                          "aria-label": `Rename ${E(l.path)}`,
-                          onClick: (C) => {
-                            C.stopPropagation(), r.onEdit({ kind: "rename", path: l.path });
+                          "aria-label": `Rename ${O(l.path)}`,
+                          onClick: (v) => {
+                            v.stopPropagation(), r.onEdit({ kind: "rename", path: l.path });
                           },
-                          children: /* @__PURE__ */ a(v, { name: "edit" })
+                          children: /* @__PURE__ */ a(x, { name: "edit" })
                         }
                       ) : null,
                       l.file && r.canDelete ? /* @__PURE__ */ a(
@@ -411,11 +411,11 @@ function en(r) {
                           type: "button",
                           className: "wb-icon-button",
                           title: "Delete",
-                          "aria-label": `Delete ${E(l.path)}`,
-                          onClick: (C) => {
-                            C.stopPropagation(), r.onDelete(l.file);
+                          "aria-label": `Delete ${O(l.path)}`,
+                          onClick: (v) => {
+                            v.stopPropagation(), r.onDelete(l.file);
                           },
-                          children: /* @__PURE__ */ a(v, { name: "trash" })
+                          children: /* @__PURE__ */ a(x, { name: "trash" })
                         }
                       ) : null
                     ] })
@@ -423,102 +423,128 @@ function en(r) {
                 ]
               }
             ),
-            D ? ae(l.path, y + 1) : null
+            M ? L(l.path, k + 1) : null
           ] }, `${u ? "d" : "f"}:${l.path}`);
         }),
-        w ? /* @__PURE__ */ a(
-          $t,
+        b ? /* @__PURE__ */ a(
+          Ot,
           {
-            x: w.x,
-            y: w.y,
-            items: r.menuFor(w.node),
-            onClose: () => i(null)
+            x: b.x,
+            y: b.y,
+            items: r.menuFor(b.node),
+            onClose: () => d(null)
           }
         ) : null
       ]
     }
   );
 }
-function tn({
-  files: r,
-  recent: o,
-  icon: m,
-  onOpen: h,
-  onClose: b
+function ln({
+  start: r = "",
+  commands: o,
+  files: m,
+  recent: h,
+  icon: y,
+  onOpen: D,
+  onClose: i
 }) {
-  const [N, c] = x(""), [w, i] = x(0), p = R(null), k = G(() => {
-    if (!N.trim()) {
-      const f = new Map(o.map((M, B) => [M, B]));
-      return [...r].sort(
-        (M, B) => (f.get(M.path) ?? 1e9) - (f.get(B.path) ?? 1e9) || M.path.localeCompare(B.path)
+  const [b, d] = P(r), w = b.startsWith(">"), [N, C] = P(0), A = R(null), Y = V(() => {
+    if (!b.trim()) {
+      const c = new Map(h.map((p, L) => [p, L]));
+      return [...m].sort(
+        (p, L) => (c.get(p.path) ?? 1e9) - (c.get(L.path) ?? 1e9) || p.path.localeCompare(L.path)
       ).slice(0, 50);
     }
-    return r.map((f) => ({ file: f, score: Qt(N.trim(), f.path) })).filter((f) => f.score !== null).sort((f, M) => M.score - f.score).slice(0, 50).map((f) => f.file);
-  }, [r, N, o]);
-  z(() => {
-    var f, M;
-    (M = (f = p.current) == null ? void 0 : f.querySelector('[aria-selected="true"]')) == null || M.scrollIntoView({ block: "nearest" });
-  }, [w]);
-  const P = (f) => {
-    f && h(f), b();
+    return m.map((c) => ({ file: c, score: St(b.trim(), c.path) })).filter((c) => c.score !== null).sort((c, p) => p.score - c.score).slice(0, 50).map((c) => c.file);
+  }, [m, b, h]), U = V(() => {
+    if (!w) return [];
+    const c = b.slice(1).trim();
+    return o.map((p) => ({ command: p, score: St(c, p.label) })).filter((p) => p.score !== null).sort(
+      (p, L) => L.score - p.score || p.command.label.localeCompare(L.command.label)
+    ).map((p) => p.command);
+  }, [w, o, b]), F = w ? U.length : Y.length;
+  W(() => {
+    var c, p;
+    (p = (c = A.current) == null ? void 0 : c.querySelector('[aria-selected="true"]')) == null || p.scrollIntoView({ block: "nearest" });
+  }, [N]);
+  const j = (c) => {
+    c && D(c), i();
+  }, G = (c) => {
+    i(), c && setTimeout(c.run, 0);
   };
-  return /* @__PURE__ */ a("div", { className: "wb-quickopen-backdrop", onMouseDown: b, children: /* @__PURE__ */ d(
+  return /* @__PURE__ */ a("div", { className: "wb-quickopen-backdrop", onMouseDown: i, children: /* @__PURE__ */ f(
     "div",
     {
       className: "wb-quickopen",
       role: "dialog",
       "aria-label": "Go to file",
-      onMouseDown: (f) => f.stopPropagation(),
+      onMouseDown: (c) => c.stopPropagation(),
       children: [
         /* @__PURE__ */ a(
           "input",
           {
             autoFocus: !0,
-            value: N,
-            placeholder: "Search files by name",
+            value: b,
+            placeholder: "Search files by name (type > for commands)",
             spellCheck: !1,
-            onChange: (f) => {
-              c(f.target.value), i(0);
+            onChange: (c) => {
+              d(c.target.value), C(0);
             },
-            onKeyDown: (f) => {
-              f.key === "Escape" && (f.preventDefault(), b()), f.key === "Enter" && (f.preventDefault(), P(k[w])), f.key === "ArrowDown" && (f.preventDefault(), i((M) => Math.min(M + 1, k.length - 1))), f.key === "ArrowUp" && (f.preventDefault(), i((M) => Math.max(M - 1, 0)));
+            onKeyDown: (c) => {
+              c.key === "Escape" && (c.preventDefault(), i()), c.key === "Enter" && (c.preventDefault(), w ? G(U[N]) : j(Y[N])), c.key === "ArrowDown" && (c.preventDefault(), C((p) => Math.min(p + 1, F - 1))), c.key === "ArrowUp" && (c.preventDefault(), C((p) => Math.max(p - 1, 0)));
             }
           }
         ),
-        /* @__PURE__ */ d("div", { className: "wb-quickopen-list", ref: p, role: "listbox", children: [
-          k.map((f, M) => /* @__PURE__ */ d(
+        /* @__PURE__ */ f("div", { className: "wb-quickopen-list", ref: A, role: "listbox", children: [
+          U.map((c, p) => /* @__PURE__ */ a(
             "button",
             {
               type: "button",
               role: "option",
-              "aria-selected": M === w,
+              "aria-selected": p === N,
               className: "wb-quickopen-item",
-              onMouseEnter: () => i(M),
-              onClick: () => P(f),
+              onMouseEnter: () => C(p),
+              onClick: () => G(c),
+              children: c.label
+            },
+            c.id
+          )),
+          (w ? [] : Y).map((c, p) => /* @__PURE__ */ f(
+            "button",
+            {
+              type: "button",
+              role: "option",
+              "aria-selected": p === N,
+              className: "wb-quickopen-item",
+              onMouseEnter: () => C(p),
+              onClick: () => j(c),
               children: [
-                /* @__PURE__ */ a("span", { className: "wb-file-icon", children: m(f.path) }),
-                /* @__PURE__ */ a("span", { children: E(f.path) }),
-                /* @__PURE__ */ a("span", { className: "wb-quickopen-dir", children: _(f.path) })
+                /* @__PURE__ */ a("span", { className: "wb-file-icon", children: y(c.path) }),
+                /* @__PURE__ */ a("span", { children: O(c.path) }),
+                /* @__PURE__ */ a("span", { className: "wb-quickopen-dir", children: ee(c.path) })
               ]
             },
-            f.path
+            c.path
           )),
-          k.length ? null : /* @__PURE__ */ a("div", { className: "wb-empty", children: "No matching files" })
+          F ? null : /* @__PURE__ */ f("div", { className: "wb-empty", children: [
+            "No matching ",
+            w ? "commands" : "files"
+          ] })
         ] })
       ]
     }
   ) });
 }
-const je = "explorer", nn = {
+const ge = "explorer", an = {
   error: "error",
   warning: "warning",
   info: "info"
-}, an = typeof navigator < "u" && /Mac|iPhone|iPad/.test(navigator.platform), H = an ? "⌘" : "Ctrl+";
-function St({
+}, rn = typeof navigator < "u" && /Mac|iPhone|iPad/.test(navigator.platform), Z = rn ? "⌘" : "Ctrl+";
+function Et({
   axis: r,
   onDrag: o
 }) {
-  const [m, h] = x(!1);
+  const [m, h] = P(!1);
   return /* @__PURE__ */ a(
     "div",
     {
@@ -526,129 +552,129 @@ function St({
       "data-dragging": m,
       role: "separator",
       "aria-orientation": r === "x" ? "vertical" : "horizontal",
-      onPointerDown: (b) => {
-        b.preventDefault(), b.currentTarget.setPointerCapture(b.pointerId), h(!0);
+      onPointerDown: (y) => {
+        y.preventDefault(), y.currentTarget.setPointerCapture(y.pointerId), h(!0);
       },
-      onPointerMove: (b) => {
-        m && o(r === "x" ? b.clientX : b.clientY);
+      onPointerMove: (y) => {
+        m && o(r === "x" ? y.clientX : y.clientY);
       },
-      onPointerUp: (b) => {
-        b.currentTarget.releasePointerCapture(b.pointerId), h(!1);
+      onPointerUp: (y) => {
+        y.currentTarget.releasePointerCapture(y.pointerId), h(!1);
       }
     }
   );
 }
-const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
+const ae = (r) => r instanceof Error ? r.message : String(r), un = Ht(
   function(o, m) {
-    var xt, Dt;
+    var Pt, Mt;
     const {
       files: h,
-      readFile: b,
-      onSave: N,
-      onCreate: c,
-      onCreateFolder: w,
-      onRefresh: i,
-      onUpload: p,
-      onRename: k,
-      onDelete: P,
-      onCopy: f,
-      onRenameFolder: M,
-      onDeleteFolder: B,
-      problems: O = [],
-      theme: K = "dark",
-      readOnly: J = !1,
-      modelScope: Z = "workbench"
-    } = o, ne = R(null), ae = R(null), [T, nt] = x(null), [ye, l] = x(je), [y, u] = x(260), [D, j] = x(!1), [Ne, Ie] = x(200), [C, le] = x(!1), [W, Ae] = x([]), [$, qe] = x(null), [ie, re] = x({}), [Ft, se] = x(/* @__PURE__ */ new Set()), [Et, ee] = x(null), [Ke, ke] = x(/* @__PURE__ */ new Set()), [at, lt] = x(!1), ze = R(null), [rt, st] = x({ line: 1, column: 1 }), [ot, L] = x(null), [Ot, ve] = x(!1), I = R({ buffers: ie, activePath: $, openPaths: W, files: h });
-    I.current = { buffers: ie, activePath: $, openPaths: W, files: h };
-    const We = R(/* @__PURE__ */ new Set()), ce = R(/* @__PURE__ */ new Set()), Ue = R(null), Ye = R(null), Ve = R(/* @__PURE__ */ new Set()), [U, Ce] = x(null), [xe, it] = x(null), Y = G(
+      readFile: y,
+      onSave: D,
+      onCreate: i,
+      onCreateFolder: b,
+      onRefresh: d,
+      onUpload: w,
+      onRename: N,
+      onDelete: C,
+      onCopy: A,
+      onRenameFolder: Y,
+      onDeleteFolder: U,
+      problems: F = [],
+      theme: j = "dark",
+      readOnly: G = !1,
+      modelScope: c = "workbench"
+    } = o, p = R(null), L = R(null), [T, lt] = P(null), [Ne, l] = P(ge), [k, u] = P(260), [M, I] = P(!1), [ke, Ae] = P(200), [v, ne] = P(null), [X, qe] = P([]), [$, Ke] = P(null), [ce, re] = P({}), [Tt, se] = P(/* @__PURE__ */ new Set()), [Lt, le] = P(null), [ze, ve] = P(/* @__PURE__ */ new Set()), [at, rt] = P(!1), We = R(null), [st, ot] = P({ line: 1, column: 1 }), [it, B] = P(null), [Bt, Ce] = P(!1), q = R({ buffers: ce, activePath: $, openPaths: X, files: h });
+    q.current = { buffers: ce, activePath: $, openPaths: X, files: h };
+    const Ue = R(/* @__PURE__ */ new Set()), ue = R(/* @__PURE__ */ new Set()), Ve = R(null), Ye = R(null), Ge = R(/* @__PURE__ */ new Set()), [H, xe] = P(null), [De, ct] = P(null), _ = V(
       () => new Map(h.map((e) => [e.path, e])),
       [h]
-    ), A = $ ? Y.get($) ?? null : null, ue = G(
-      () => Pt(h.map((e) => e.path)),
+    ), K = $ ? _.get($) ?? null : null, de = V(
+      () => $t(h.map((e) => e.path)),
       [h]
-    ), Ge = G(
-      () => [.../* @__PURE__ */ new Set([...o.folders ?? [], ...Ke])],
+    ), Xe = V(
+      () => [.../* @__PURE__ */ new Set([...o.folders ?? [], ...ze])],
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      [o.folders, Ke]
+      [o.folders, ze]
     );
-    z(() => {
-      ke((e) => {
-        const t = [...e].filter((n) => !ue.has(n));
+    W(() => {
+      ve((e) => {
+        const t = [...e].filter((n) => !de.has(n));
         return t.length === e.size ? e : new Set(t);
       });
-    }, [ue]);
-    const oe = $ ? ie[$] : void 0, de = G(
-      () => Object.entries(ie).filter(([, e]) => e.text !== e.saved).map(([e]) => e),
-      [ie]
-    ), fe = G(() => new Set(de), [de]), { onActiveFileChange: De, onDirtyChange: Pe } = o;
-    z(() => {
-      De == null || De($), st({ line: 1, column: 1 });
-    }, [$, De]);
-    const Xe = de.join(`
+    }, [de]);
+    const oe = $ ? ce[$] : void 0, fe = V(
+      () => Object.entries(ce).filter(([, e]) => e.text !== e.saved).map(([e]) => e),
+      [ce]
+    ), he = V(() => new Set(fe), [fe]), { onActiveFileChange: Pe, onDirtyChange: Me } = o;
+    W(() => {
+      Pe == null || Pe($), ot({ line: 1, column: 1 });
+    }, [$, Pe]);
+    const He = fe.join(`
 `);
-    z(
-      () => Pe == null ? void 0 : Pe(Xe ? Xe.split(`
+    W(
+      () => Me == null ? void 0 : Me(He ? He.split(`
 `) : []),
-      [Xe, Pe]
+      [He, Me]
     );
-    const ct = V(
+    const ut = Q(
       (e) => {
         var t;
-        return ((t = o.language) == null ? void 0 : t.call(o, e)) ?? Ht(e);
+        return ((t = o.language) == null ? void 0 : t.call(o, e)) ?? Jt(e);
       },
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [o.language]
-    ), Me = V(
+    ), Se = Q(
       (e, t = { folder: !1, open: !1 }) => {
         var n;
-        return ((n = o.fileIcon) == null ? void 0 : n.call(o, e, t)) ?? Zt(e, t);
+        return ((n = o.fileIcon) == null ? void 0 : n.call(o, e, t)) ?? tn(e, t);
       },
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [o.fileIcon]
-    ), he = V(
-      (e) => `file:///${Z}/${e}`,
-      [Z]
-    ), Se = V(
+    ), me = Q(
+      (e) => `file:///${c}/${e}`,
+      [c]
+    ), $e = Q(
       (e) => {
-        We.current.has(e) || (We.current.add(e), b(e).then(
+        Ue.current.has(e) || (Ue.current.add(e), y(e).then(
           (t) => re((n) => ({
             ...n,
             [e]: { text: t, saved: t }
           }))
         ).catch((t) => {
-          I.current.files.some((n) => n.path === e) && L(`Couldn't open ${e}: ${te(t)}`);
-        }).finally(() => We.current.delete(e)));
+          q.current.files.some((n) => n.path === e) && B(`Couldn't open ${e}: ${ae(t)}`);
+        }).finally(() => Ue.current.delete(e)));
       },
-      [b]
-    ), q = V(
+      [y]
+    ), z = Q(
       (e, t) => {
-        const n = I.current.files.find((s) => s.path === e);
+        const n = q.current.files.find((s) => s.path === e);
         if (!n) {
           Ye.current = e;
           return;
         }
-        L(null), Ae(
+        B(null), qe(
           (s) => s.includes(e) ? s : [...s, e]
-        ), qe(e), t && (Ue.current = {
+        ), Ke(e), t && (Ve.current = {
           path: e,
           line: t.line,
           column: t.column ?? 1
-        }), !n.binary && !I.current.buffers[e] && Se(e);
+        }), !n.binary && !q.current.buffers[e] && $e(e);
       },
-      [Se]
-    ), me = V(
+      [$e]
+    ), be = Q(
       (e) => {
         var t;
-        (t = T == null ? void 0 : T.editor.getModel(T.Uri.parse(he(e)))) == null || t.dispose();
+        (t = T == null ? void 0 : T.editor.getModel(T.Uri.parse(me(e)))) == null || t.dispose();
       },
-      [T, he]
-    ), be = V(
+      [T, me]
+    ), we = Q(
       (e) => {
         if (!e.length) return;
         const t = new Set(e);
-        Ae((n) => {
+        qe((n) => {
           const s = n.filter((g) => !t.has(g));
-          return qe((g) => {
+          return Ke((g) => {
             if (!g || !t.has(g)) return g;
             const S = n.indexOf(g);
             return s[Math.min(S, s.length - 1)] ?? null;
@@ -657,51 +683,51 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
           const s = { ...n };
           for (const g of e) delete s[g];
           return s;
-        }), e.forEach(me);
+        }), e.forEach(be);
       },
-      [me]
-    ), ut = (e) => {
-      fe.has(e) && !window.confirm(
-        `Close ${E(e)} without saving? Your changes will be lost.`
-      ) || be([e]);
+      [be]
+    ), dt = (e) => {
+      he.has(e) && !window.confirm(
+        `Close ${O(e)} without saving? Your changes will be lost.`
+      ) || we([e]);
     };
-    z(() => {
-      be(
-        I.current.openPaths.filter(
-          (t) => !Y.has(t) && !Ve.current.has(t)
+    W(() => {
+      we(
+        q.current.openPaths.filter(
+          (t) => !_.has(t) && !Ge.current.has(t)
         )
       );
       const e = Ye.current;
-      e && Y.has(e) && (Ye.current = null, q(e));
-    }, [Y, be, q]);
-    const we = V(
-      async (e = I.current.activePath) => {
-        const t = e ? I.current.buffers[e] : void 0;
-        if (!e || !t || !N || J || t.text === t.saved || ce.current.has(e))
+      e && _.has(e) && (Ye.current = null, z(e));
+    }, [_, we, z]);
+    const ie = Q(
+      async (e = q.current.activePath) => {
+        const t = e ? q.current.buffers[e] : void 0;
+        if (!e || !t || !D || G || t.text === t.saved || ue.current.has(e))
           return !1;
         const n = t.text;
-        ce.current.add(e), ve(!0), L(null);
+        ue.current.add(e), Ce(!0), B(null);
         try {
-          return await N(e, n), re(
+          return await D(e, n), re(
             (s) => s[e] ? { ...s, [e]: { ...s[e], saved: n } } : s
           ), !0;
         } catch (s) {
-          return L(`Couldn't save ${E(e)}: ${te(s)}`), !1;
+          return B(`Couldn't save ${O(e)}: ${ae(s)}`), !1;
         } finally {
-          ce.current.delete(e), ve(ce.current.size > 0);
+          ue.current.delete(e), Ce(ue.current.size > 0);
         }
       },
-      [N, J]
-    ), He = V(async () => (await Promise.all(
-      Object.keys(I.current.buffers).map((t) => {
-        const n = I.current.buffers[t];
-        return n.text === n.saved ? !0 : we(t);
+      [D, G]
+    ), Fe = Q(async () => (await Promise.all(
+      Object.keys(q.current.buffers).map((t) => {
+        const n = q.current.buffers[t];
+        return n.text === n.saved ? !0 : ie(t);
       })
-    )).every(Boolean), [we]), dt = V(
+    )).every(Boolean), [ie]), ft = Q(
       (e) => {
         var n;
-        const t = (e ? [e] : I.current.openPaths).filter(
-          (s) => Y.has(s)
+        const t = (e ? [e] : q.current.openPaths).filter(
+          (s) => _.has(s)
         );
         re((s) => {
           const g = { ...s };
@@ -709,43 +735,43 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
           return g;
         });
         for (const s of t)
-          me(s), (n = Y.get(s)) != null && n.binary || Se(s);
+          be(s), (n = _.get(s)) != null && n.binary || $e(s);
       },
-      [me, Y, Se]
+      [be, _, $e]
     );
-    Gt(
+    _t(
       m,
       () => ({
-        open: q,
-        save: () => we(),
-        saveAll: He,
-        reload: dt,
-        dirtyPaths: () => Object.entries(I.current.buffers).filter(([, e]) => e.text !== e.saved).map(([e]) => e)
+        open: z,
+        save: () => ie(),
+        saveAll: Fe,
+        reload: ft,
+        dirtyPaths: () => Object.entries(q.current.buffers).filter(([, e]) => e.text !== e.saved).map(([e]) => e)
       }),
-      [q, dt, we, He]
+      [z, ft, ie, Fe]
     );
-    const $e = (e) => ue.has(e) || Ge.includes(e), Fe = (e) => Y.has(e) || $e(e), Tt = (e) => {
-      Ae((t) => t.map((n) => e.get(n) ?? n)), qe((t) => t && (e.get(t) ?? t)), re((t) => {
+    const Ee = (e) => de.has(e) || Xe.includes(e), Oe = (e) => _.has(e) || Ee(e), Rt = (e) => {
+      qe((t) => t.map((n) => e.get(n) ?? n)), Ke((t) => t && (e.get(t) ?? t)), re((t) => {
         const n = {};
         for (const [s, g] of Object.entries(t))
           n[e.get(s) ?? s] = g;
         return n;
       });
-      for (const t of e.keys()) me(t);
-    }, ft = async (e, t) => {
+      for (const t of e.keys()) be(t);
+    }, ht = async (e, t) => {
       const n = /* @__PURE__ */ new Map();
-      if ($e(e))
+      if (Ee(e))
         for (const s of h)
           s.path.startsWith(`${e}/`) && n.set(s.path, `${t}${s.path.slice(e.length)}`);
       else
         n.set(e, t);
-      for (const s of n.keys()) Ve.current.add(s);
+      for (const s of n.keys()) Ge.current.add(s);
       try {
-        if (!$e(e)) await (k == null ? void 0 : k(e, t));
-        else if (M) await M(e, t);
+        if (!Ee(e)) await (N == null ? void 0 : N(e, t));
+        else if (Y) await Y(e, t);
         else
-          for (const [s, g] of n) await (k == null ? void 0 : k(s, g));
-        Tt(n), ke((s) => {
+          for (const [s, g] of n) await (N == null ? void 0 : N(s, g));
+        Rt(n), ve((s) => {
           const g = /* @__PURE__ */ new Set();
           for (const S of s)
             g.add(
@@ -754,128 +780,128 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
           return g;
         });
       } finally {
-        for (const s of n.keys()) Ve.current.delete(s);
+        for (const s of n.keys()) Ge.current.delete(s);
       }
-    }, ht = async (e, t) => {
-      if (ee(null), L(null), Fe(t)) {
-        L(`${t} already exists`);
+    }, mt = async (e, t) => {
+      if (le(null), B(null), Oe(t)) {
+        B(`${t} already exists`);
         return;
       }
       try {
-        e.kind === "create" && e.type === "folder" ? (w ? await w(t) : ke((n) => new Set(n).add(t)), se((n) => {
+        e.kind === "create" && e.type === "folder" ? (b ? await b(t) : ve((n) => new Set(n).add(t)), se((n) => {
           const s = new Set(n);
           return s.delete(t), s;
-        }), ze.current = { path: t, folder: !0 }) : e.kind === "create" ? (await (c == null ? void 0 : c(t)), q(t)) : await ft(e.path, t);
+        }), We.current = { path: t, folder: !0 }) : e.kind === "create" ? (await (i == null ? void 0 : i(t)), z(t)) : await ht(e.path, t);
       } catch (n) {
-        L(te(n));
+        B(ae(n));
       }
-    }, Lt = (e, t) => {
-      const n = (F) => e ? `${e}/${F}` : F;
-      if (!Fe(n(t))) return n(t);
+    }, jt = (e, t) => {
+      const n = (E) => e ? `${e}/${E}` : E;
+      if (!Oe(n(t))) return n(t);
       const s = t.lastIndexOf("."), g = s > 0 ? t.slice(0, s) : t, S = s > 0 ? t.slice(s) : "";
-      for (let F = 1; ; F++) {
-        const Le = `${g} copy${F > 1 ? ` ${F}` : ""}${S}`;
-        if (!Fe(n(Le))) return n(Le);
+      for (let E = 1; ; E++) {
+        const Re = `${g} copy${E > 1 ? ` ${E}` : ""}${S}`;
+        if (!Oe(n(Re))) return n(Re);
       }
-    }, mt = async (e) => {
+    }, bt = async (e) => {
       var s, g;
-      if (!U) return;
-      const { path: t, mode: n } = U;
-      L(null);
+      if (!H) return;
+      const { path: t, mode: n } = H;
+      B(null);
       try {
         if (n === "cut") {
-          Ce(null);
-          const F = e ? `${e}/${E(t)}` : E(t);
-          if (F === t) return;
-          if (Fe(F)) throw new Error(`${F} already exists`);
-          await ft(t, F);
+          xe(null);
+          const E = e ? `${e}/${O(t)}` : O(t);
+          if (E === t) return;
+          if (Oe(E)) throw new Error(`${E} already exists`);
+          await ht(t, E);
           return;
         }
-        const S = Lt(e, E(t));
-        if (f)
-          await f(t, S);
+        const S = jt(e, O(t));
+        if (A)
+          await A(t, S);
         else {
-          if ((s = Y.get(t)) != null && s.binary || !c)
-            throw new Error(`${E(t)} can't be copied here`);
+          if ((s = _.get(t)) != null && s.binary || !i)
+            throw new Error(`${O(t)} can't be copied here`);
           {
-            const F = ((g = I.current.buffers[t]) == null ? void 0 : g.saved) ?? await b(t);
-            await c(S), F && await (N == null ? void 0 : N(S, F));
+            const E = ((g = q.current.buffers[t]) == null ? void 0 : g.saved) ?? await y(t);
+            await i(S), E && await (D == null ? void 0 : D(S, E));
           }
         }
-        q(S);
+        z(S);
       } catch (S) {
-        L(te(S));
+        B(ae(S));
       }
-    }, Rt = () => {
-      const e = ze.current;
-      return e ? e.folder ? e.path : _(e.path) : $ ? _($) : "";
-    }, bt = (e) => {
-      const t = Rt();
+    }, It = () => {
+      const e = We.current;
+      return e ? e.folder ? e.path : ee(e.path) : $ ? ee($) : "";
+    }, wt = (e) => {
+      const t = It();
       se((n) => {
         if (!t || !n.has(t)) return n;
         const s = new Set(n);
         return s.delete(t), s;
-      }), ee({ kind: "create", type: e, folder: t });
-    }, Bt = async (e, t) => {
-      L(null), ve(!0);
+      }), le({ kind: "create", type: e, folder: t });
+    }, At = async (e, t) => {
+      B(null), Ce(!0);
       try {
         for (const n of e)
-          await (p == null ? void 0 : p(n, t ? `${t}/${n.name}` : n.name));
+          await (w == null ? void 0 : w(n, t ? `${t}/${n.name}` : n.name));
       } catch (n) {
-        L(te(n));
+        B(ae(n));
       } finally {
-        ve(ce.current.size > 0);
+        Ce(ue.current.size > 0);
       }
-    }, wt = async () => {
-      if (!(!i || at)) {
-        lt(!0), L(null);
+    }, pt = async () => {
+      if (!(!d || at)) {
+        rt(!0), B(null);
         try {
-          await i();
+          await d();
         } catch (e) {
-          L(te(e));
+          B(ae(e));
         } finally {
-          lt(!1);
+          rt(!1);
         }
       }
-    }, Ee = async (e) => {
-      L(null);
+    }, Te = async (e) => {
+      B(null);
       try {
-        $e(e) ? B && await B(e) : await (P == null ? void 0 : P(e)), ke((t) => {
+        Ee(e) ? U && await U(e) : await (C == null ? void 0 : C(e)), ve((t) => {
           const n = [...t].filter(
             (s) => s !== e && !s.startsWith(`${e}/`)
           );
           return n.length === t.size ? t : new Set(n);
         });
       } catch (t) {
-        L(te(t));
+        B(ae(t));
       }
-    }, pt = G(() => {
+    }, gt = V(() => {
       const e = /* @__PURE__ */ new Map();
-      for (const t of O) {
+      for (const t of F) {
         if (!t.path || t.severity === "info") continue;
         const n = t.severity === "warning" ? "warning" : "error";
         e.get(t.path) !== "error" && e.set(t.path, n);
       }
       return e;
-    }, [O]), gt = G(() => {
+    }, [F]), yt = V(() => {
       const e = { error: 0, warning: 0, info: 0 };
-      for (const t of O) e[t.severity ?? "error"]++;
+      for (const t of F) e[t.severity ?? "error"]++;
       return e;
-    }, [O]), jt = G(() => {
+    }, [F]), qt = V(() => {
       const e = /* @__PURE__ */ new Map();
-      for (const t of O) {
+      for (const t of F) {
         const n = t.path ?? "";
         e.set(n, [...e.get(n) ?? [], t]);
       }
       return [...e];
-    }, [O]);
-    z(() => {
+    }, [F]);
+    W(() => {
       if (!T || !$ || !oe) return;
-      const e = T.editor.getModel(T.Uri.parse(he($)));
+      const e = T.editor.getModel(T.Uri.parse(me($)));
       e && T.editor.setModelMarkers(
         e,
         "workbench",
-        O.filter((t) => t.path === $).map((t) => {
+        F.filter((t) => t.path === $).map((t) => {
           const n = Math.min(
             Math.max(t.line ?? 1, 1),
             e.getLineCount()
@@ -890,227 +916,258 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
           };
         })
       );
-    }, [T, $, oe, O, he]), z(() => {
-      const e = Ue.current, t = ae.current;
+    }, [T, $, oe, F, me]), W(() => {
+      const e = Ve.current, t = L.current;
       if (!e || !t || e.path !== $ || !oe)
         return;
       const n = setTimeout(() => {
-        Ue.current = null, t.revealLineInCenter(e.line), t.setPosition({ lineNumber: e.line, column: e.column }), t.focus();
+        Ve.current = null, t.revealLineInCenter(e.line), t.setPosition({ lineNumber: e.line, column: e.column }), t.focus();
       }, 0);
       return () => clearTimeout(n);
     }, [$, oe]);
-    const It = (e) => {
+    const _e = (e) => {
       if (!(e.metaKey || e.ctrlKey) || e.altKey) return;
       const t = e.key.toLowerCase();
-      t === "s" ? (e.preventDefault(), e.stopPropagation(), e.shiftKey ? He() : we()) : t === "p" && !e.shiftKey ? (e.preventDefault(), e.stopPropagation(), le(!0)) : t === "b" ? (e.preventDefault(), l((n) => n ? null : je)) : t === "j" && (e.preventDefault(), j((n) => !n));
-    }, _e = de.length > 0;
-    z(() => {
-      if (!_e) return;
+      t === "s" ? (e.preventDefault(), e.stopPropagation(), e.shiftKey ? Fe() : ie()) : t === "p" && !e.shiftKey ? (e.preventDefault(), e.stopPropagation(), ne("")) : t === "p" ? (e.preventDefault(), e.stopPropagation(), ne(">")) : t === "b" ? (e.preventDefault(), l((n) => n ? null : ge)) : t === "j" && (e.preventDefault(), I((n) => !n));
+    }, Nt = R(_e);
+    Nt.current = _e, W(() => {
+      const e = (t) => {
+        t.target === document.body && Nt.current(t);
+      };
+      return document.addEventListener("keydown", e), () => document.removeEventListener("keydown", e);
+    }, []);
+    const Kt = () => {
+      const e = L.current;
+      return [
+        { id: "wb.save", label: "File: Save", run: () => void ie() },
+        { id: "wb.saveAll", label: "File: Save All", run: () => void Fe() },
+        {
+          id: "wb.sideBar",
+          label: "View: Toggle Side Bar",
+          run: () => l((t) => t ? null : ge)
+        },
+        {
+          id: "wb.problems",
+          label: "View: Toggle Problems",
+          run: () => I((t) => !t)
+        },
+        ...((e == null ? void 0 : e.getSupportedActions()) ?? []).filter((t) => t.label).map((t) => ({
+          id: t.id,
+          // Monaco's own palette, which shows each command's shortcut.
+          label: t.id === "editor.action.quickCommand" ? "Editor: Command Palette (F1)" : t.label,
+          run: () => {
+            e == null || e.focus(), t.run();
+          }
+        }))
+      ];
+    }, Qe = fe.length > 0;
+    W(() => {
+      if (!Qe) return;
       const e = (t) => t.preventDefault();
       return window.addEventListener("beforeunload", e), () => window.removeEventListener("beforeunload", e);
-    }, [_e]);
-    const X = !J, Qe = !!c && X, Je = !!(w || c) && X, Q = !!k && X, yt = !!(M || k) && X, Ze = !!P && X, Oe = !!(f || c) && X, Nt = X && !!U && ((U == null ? void 0 : U.mode) === "cut" ? Q : Oe), kt = (e) => X && (!!B || Ke.has(e) && !ue.has(e)), vt = (e, t) => {
+    }, [Qe]);
+    const J = !G, Je = !!i && J, Ze = !!(b || i) && J, te = !!N && J, kt = !!(Y || N) && J, et = !!C && J, Le = !!(A || i) && J, vt = J && !!H && ((H == null ? void 0 : H.mode) === "cut" ? te : Le), Ct = (e) => J && (!!U || ze.has(e) && !de.has(e)), xt = (e, t) => {
       se((n) => {
         if (!t || !n.has(t)) return n;
         const s = new Set(n);
         return s.delete(t), s;
-      }), ee({ kind: "create", type: e, folder: t });
-    }, et = (e) => {
+      }), le({ kind: "create", type: e, folder: t });
+    }, tt = (e) => {
       var t;
       return void ((t = navigator.clipboard) == null ? void 0 : t.writeText(e));
-    }, Ct = () => se(/* @__PURE__ */ new Set([...ue, ...Ge])), At = (e) => {
-      const t = !!(e != null && e.children), n = e ? t ? e.path : _(e.path) : "", s = [];
-      Qe && s.push({ label: "New File…", run: () => vt("file", n) }), Je && s.push({
+    }, Dt = () => se(/* @__PURE__ */ new Set([...de, ...Xe])), zt = (e) => {
+      const t = !!(e != null && e.children), n = e ? t ? e.path : ee(e.path) : "", s = [];
+      Je && s.push({ label: "New File…", run: () => xt("file", n) }), Ze && s.push({
         label: "New Folder…",
-        run: () => vt("folder", n)
+        run: () => xt("folder", n)
       });
-      const g = Q || Oe ? {
+      const g = te || Le ? {
         label: "Paste",
-        keys: `${H}V`,
-        disabled: !Nt,
-        run: () => void mt(n)
+        keys: `${Z}V`,
+        disabled: !vt,
+        run: () => void bt(n)
       } : null;
-      return Re(e ? t ? [
+      return je(e ? t ? [
         ...s,
         "separator",
         g,
         "separator",
-        { label: "Copy Path", run: () => et(e.path) },
+        { label: "Copy Path", run: () => tt(e.path) },
         "separator",
-        yt ? {
+        kt ? {
           label: "Rename…",
           keys: "F2",
-          run: () => ee({ kind: "rename", path: e.path })
+          run: () => le({ kind: "rename", path: e.path })
         } : null,
-        kt(e.path) ? { label: "Delete", keys: "Del", run: () => void Ee(e.path) } : null
+        Ct(e.path) ? { label: "Delete", keys: "Del", run: () => void Te(e.path) } : null
       ] : [
-        { label: "Open", run: () => q(e.path) },
+        { label: "Open", run: () => z(e.path) },
         "separator",
-        Q ? {
+        te ? {
           label: "Cut",
-          keys: `${H}X`,
-          run: () => Ce({ path: e.path, mode: "cut" })
+          keys: `${Z}X`,
+          run: () => xe({ path: e.path, mode: "cut" })
         } : null,
-        Oe ? {
+        Le ? {
           label: "Copy",
-          keys: `${H}C`,
-          run: () => Ce({ path: e.path, mode: "copy" })
+          keys: `${Z}C`,
+          run: () => xe({ path: e.path, mode: "copy" })
         } : null,
         g,
         "separator",
-        { label: "Copy Path", run: () => et(e.path) },
+        { label: "Copy Path", run: () => tt(e.path) },
         "separator",
-        Q ? {
+        te ? {
           label: "Rename…",
           keys: "F2",
-          run: () => ee({ kind: "rename", path: e.path })
+          run: () => le({ kind: "rename", path: e.path })
         } : null,
-        Ze ? { label: "Delete", keys: "Del", run: () => void Ee(e.path) } : null
+        et ? { label: "Delete", keys: "Del", run: () => void Te(e.path) } : null
       ] : [
         ...s,
         "separator",
         g,
         "separator",
-        i ? { label: "Refresh Explorer", run: () => void wt() } : null,
-        { label: "Collapse Folders", run: Ct }
+        d ? { label: "Refresh Explorer", run: () => void pt() } : null,
+        { label: "Collapse Folders", run: Dt }
       ]);
-    }, qt = (e, t) => {
+    }, Wt = (e, t) => {
       const n = !!t.children;
-      e === "paste" ? Nt && mt(n ? t.path : _(t.path)) : e === "rename" ? (n ? yt : Q) && ee({ kind: "rename", path: t.path }) : e === "delete" ? (n ? kt(t.path) : Ze) && Ee(t.path) : !n && (e === "cut" ? Q : Oe) && Ce({ path: t.path, mode: e });
-    }, Te = (e) => {
-      const t = e.filter((n) => fe.has(n));
+      e === "paste" ? vt && bt(n ? t.path : ee(t.path)) : e === "rename" ? (n ? kt : te) && le({ kind: "rename", path: t.path }) : e === "delete" ? (n ? Ct(t.path) : et) && Te(t.path) : !n && (e === "cut" ? te : Le) && xe({ path: t.path, mode: e });
+    }, Be = (e) => {
+      const t = e.filter((n) => he.has(n));
       t.length && !window.confirm(
-        t.length === 1 ? `Close ${E(t[0])} without saving? Your changes will be lost.` : `Close ${t.length} files without saving? Your changes will be lost.`
-      ) || be(e);
-    }, Kt = (e) => {
-      const t = W.indexOf(e), n = W.filter((S) => S !== e), s = W.slice(t + 1), g = W.filter((S) => !fe.has(S));
-      return Re([
-        { label: "Close", run: () => Te([e]) },
+        t.length === 1 ? `Close ${O(t[0])} without saving? Your changes will be lost.` : `Close ${t.length} files without saving? Your changes will be lost.`
+      ) || we(e);
+    }, Ut = (e) => {
+      const t = X.indexOf(e), n = X.filter((S) => S !== e), s = X.slice(t + 1), g = X.filter((S) => !he.has(S));
+      return je([
+        { label: "Close", run: () => Be([e]) },
         {
           label: "Close Others",
           disabled: !n.length,
-          run: () => Te(n)
+          run: () => Be(n)
         },
         {
           label: "Close to the Right",
           disabled: !s.length,
-          run: () => Te(s)
+          run: () => Be(s)
         },
-        { label: "Close Saved", disabled: !g.length, run: () => be(g) },
-        { label: "Close All", run: () => Te(W) },
+        { label: "Close Saved", disabled: !g.length, run: () => we(g) },
+        { label: "Close All", run: () => Be(X) },
         "separator",
-        { label: "Copy Path", run: () => et(e) },
+        { label: "Copy Path", run: () => tt(e) },
         {
           label: "Reveal in Explorer",
           run: () => {
-            l(je), se((S) => {
-              const F = new Set(S);
-              for (const Le of Pt([e])) F.delete(Le);
-              return F;
-            }), q(e);
+            l(ge), se((S) => {
+              const E = new Set(S);
+              for (const Re of $t([e])) E.delete(Re);
+              return E;
+            }), z(e);
           }
         }
       ]);
-    }, zt = [
-      { id: je, icon: "files", title: "Explorer", badge: void 0 },
+    }, Vt = [
+      { id: ge, icon: "files", title: "Explorer", badge: void 0 },
       ...o.activities ?? []
-    ], pe = (xt = o.activities) == null ? void 0 : xt.find(
-      (e) => e.id === ye
-    ), Wt = (e) => se((t) => {
+    ], pe = (Pt = o.activities) == null ? void 0 : Pt.find(
+      (e) => e.id === Ne
+    ), Yt = (e) => se((t) => {
       const n = new Set(t);
       return n.delete(e) || n.add(e), n;
-    }), Ut = J || !N || !!(A != null && A.readOnly);
-    return /* @__PURE__ */ d(
+    }), Gt = G || !D || !!(K != null && K.readOnly);
+    return /* @__PURE__ */ f(
       "div",
       {
-        ref: ne,
+        ref: p,
         className: `wb${o.className ? ` ${o.className}` : ""}`,
-        "data-theme": K,
+        "data-theme": j,
         style: o.style,
-        onKeyDownCapture: It,
+        onKeyDownCapture: _e,
         children: [
-          /* @__PURE__ */ d("header", { className: "wb-titlebar", children: [
-            /* @__PURE__ */ a("div", { className: "wb-titlebar-title", children: /* @__PURE__ */ d(
+          /* @__PURE__ */ f("header", { className: "wb-titlebar", children: [
+            /* @__PURE__ */ a("div", { className: "wb-titlebar-title", children: /* @__PURE__ */ f(
               "button",
               {
                 type: "button",
                 className: "wb-command-center",
-                title: `Go to File (${H}P)`,
-                onClick: () => le(!0),
+                title: `Go to File (${Z}P)`,
+                onClick: () => ne(""),
                 children: [
-                  /* @__PURE__ */ a(v, { name: "search" }),
+                  /* @__PURE__ */ a(x, { name: "search" }),
                   /* @__PURE__ */ a("span", { children: o.title ?? "Search files" })
                 ]
               }
             ) }),
             /* @__PURE__ */ a("div", { className: "wb-titlebar-actions", children: o.actions })
           ] }),
-          /* @__PURE__ */ d("div", { className: "wb-body", children: [
-            /* @__PURE__ */ d("nav", { className: "wb-activitybar", "aria-label": "Views", children: [
-              zt.map((e) => /* @__PURE__ */ d(
+          /* @__PURE__ */ f("div", { className: "wb-body", children: [
+            /* @__PURE__ */ f("nav", { className: "wb-activitybar", "aria-label": "Views", children: [
+              Vt.map((e) => /* @__PURE__ */ f(
                 "button",
                 {
                   type: "button",
                   className: "wb-activity",
                   title: e.title,
                   "aria-label": e.title,
-                  "aria-pressed": ye === e.id,
+                  "aria-pressed": Ne === e.id,
                   onClick: () => l((t) => t === e.id ? null : e.id),
                   children: [
-                    /* @__PURE__ */ a(v, { name: e.icon }),
+                    /* @__PURE__ */ a(x, { name: e.icon }),
                     e.badge !== void 0 && e.badge !== null ? /* @__PURE__ */ a("span", { className: "wb-activity-badge", children: e.badge }) : null
                   ]
                 },
                 e.id
               )),
               /* @__PURE__ */ a("div", { className: "wb-activity-spacer" }),
-              /* @__PURE__ */ d(
+              /* @__PURE__ */ f(
                 "button",
                 {
                   type: "button",
                   className: "wb-activity",
-                  title: `Problems (${H}J)`,
+                  title: `Problems (${Z}J)`,
                   "aria-label": "Problems",
-                  "aria-pressed": D,
-                  onClick: () => j((e) => !e),
+                  "aria-pressed": M,
+                  onClick: () => I((e) => !e),
                   children: [
-                    /* @__PURE__ */ a(v, { name: "warning" }),
-                    O.length ? /* @__PURE__ */ a("span", { className: "wb-activity-badge", children: O.length }) : null
+                    /* @__PURE__ */ a(x, { name: "warning" }),
+                    F.length ? /* @__PURE__ */ a("span", { className: "wb-activity-badge", children: F.length }) : null
                   ]
                 }
               )
             ] }),
-            ye ? /* @__PURE__ */ d(ge, { children: [
-              /* @__PURE__ */ d("aside", { className: "wb-sidebar", style: { width: y }, children: [
+            Ne ? /* @__PURE__ */ f(ye, { children: [
+              /* @__PURE__ */ f("aside", { className: "wb-sidebar", style: { width: k }, children: [
                 /* @__PURE__ */ a("div", { className: "wb-sidebar-title", children: /* @__PURE__ */ a("span", { children: (pe == null ? void 0 : pe.title) ?? "Explorer" }) }),
-                pe ? /* @__PURE__ */ a("div", { className: "wb-sidebar-body", children: pe.render() }) : /* @__PURE__ */ d(ge, { children: [
-                  /* @__PURE__ */ d("div", { className: "wb-section-header", children: [
-                    /* @__PURE__ */ a(v, { name: "chevron-down" }),
+                pe ? /* @__PURE__ */ a("div", { className: "wb-sidebar-body", children: pe.render() }) : /* @__PURE__ */ f(ye, { children: [
+                  /* @__PURE__ */ f("div", { className: "wb-section-header", children: [
+                    /* @__PURE__ */ a(x, { name: "chevron-down" }),
                     /* @__PURE__ */ a("span", { className: "wb-grow", children: o.explorerTitle ?? (typeof o.title == "string" ? o.title : "Files") }),
-                    /* @__PURE__ */ d("span", { className: "wb-section-actions", children: [
-                      Qe ? /* @__PURE__ */ a(
+                    /* @__PURE__ */ f("span", { className: "wb-section-actions", children: [
+                      Je ? /* @__PURE__ */ a(
                         "button",
                         {
                           type: "button",
                           className: "wb-icon-button",
                           title: "New File…",
                           "aria-label": "New file",
-                          onClick: () => bt("file"),
-                          children: /* @__PURE__ */ a(v, { name: "new-file" })
+                          onClick: () => wt("file"),
+                          children: /* @__PURE__ */ a(x, { name: "new-file" })
                         }
                       ) : null,
-                      Je ? /* @__PURE__ */ a(
+                      Ze ? /* @__PURE__ */ a(
                         "button",
                         {
                           type: "button",
                           className: "wb-icon-button",
                           title: "New Folder…",
                           "aria-label": "New folder",
-                          onClick: () => bt("folder"),
-                          children: /* @__PURE__ */ a(v, { name: "new-folder" })
+                          onClick: () => wt("folder"),
+                          children: /* @__PURE__ */ a(x, { name: "new-folder" })
                         }
                       ) : null,
-                      i ? /* @__PURE__ */ a(
+                      d ? /* @__PURE__ */ a(
                         "button",
                         {
                           type: "button",
@@ -1118,8 +1175,8 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
                           title: "Refresh Explorer",
                           "aria-label": "Refresh explorer",
                           disabled: at,
-                          onClick: () => void wt(),
-                          children: /* @__PURE__ */ a(v, { name: "refresh" })
+                          onClick: () => void pt(),
+                          children: /* @__PURE__ */ a(x, { name: "refresh" })
                         }
                       ) : null,
                       /* @__PURE__ */ a(
@@ -1129,90 +1186,90 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
                           className: "wb-icon-button",
                           title: "Collapse Folders",
                           "aria-label": "Collapse folders",
-                          onClick: Ct,
-                          children: /* @__PURE__ */ a(v, { name: "collapse-all" })
+                          onClick: Dt,
+                          children: /* @__PURE__ */ a(x, { name: "collapse-all" })
                         }
                       )
                     ] })
                   ] }),
                   /* @__PURE__ */ a("div", { className: "wb-sidebar-body", children: /* @__PURE__ */ a(
-                    en,
+                    nn,
                     {
                       files: h,
-                      emptyFolders: Ge,
-                      menuFor: At,
-                      cutPath: (U == null ? void 0 : U.mode) === "cut" ? U.path : null,
-                      onShortcut: qt,
+                      emptyFolders: Xe,
+                      menuFor: zt,
+                      cutPath: (H == null ? void 0 : H.mode) === "cut" ? H.path : null,
+                      onShortcut: Wt,
                       onFocus: (e) => {
-                        ze.current = e;
+                        We.current = e;
                       },
                       activePath: $,
-                      dirtyPaths: fe,
-                      problemOf: (e) => pt.get(e),
-                      icon: Me,
-                      collapsed: Ft,
-                      onToggle: Wt,
-                      onOpen: (e) => q(e.path),
-                      edit: Et,
-                      onEdit: ee,
-                      onSubmitEdit: (e, t) => void ht(e, t),
-                      canMove: Q,
-                      onMove: (e, t) => void ht({ kind: "rename", path: e }, t),
-                      canUpload: !!p && X,
-                      onDropFiles: (e, t) => void Bt(e, t),
-                      canCreateFile: Qe,
-                      canCreateFolder: Je,
-                      canRename: Q,
-                      canDelete: Ze,
-                      onDelete: (e) => void Ee(e.path)
+                      dirtyPaths: he,
+                      problemOf: (e) => gt.get(e),
+                      icon: Se,
+                      collapsed: Tt,
+                      onToggle: Yt,
+                      onOpen: (e) => z(e.path),
+                      edit: Lt,
+                      onEdit: le,
+                      onSubmitEdit: (e, t) => void mt(e, t),
+                      canMove: te,
+                      onMove: (e, t) => void mt({ kind: "rename", path: e }, t),
+                      canUpload: !!w && J,
+                      onDropFiles: (e, t) => void At(e, t),
+                      canCreateFile: Je,
+                      canCreateFolder: Ze,
+                      canRename: te,
+                      canDelete: et,
+                      onDelete: (e) => void Te(e.path)
                     }
                   ) })
                 ] })
               ] }),
               /* @__PURE__ */ a(
-                St,
+                Et,
                 {
                   axis: "x",
                   onDrag: (e) => {
                     var n;
-                    const t = (((n = ne.current) == null ? void 0 : n.getBoundingClientRect().left) ?? 0) + 44;
+                    const t = (((n = p.current) == null ? void 0 : n.getBoundingClientRect().left) ?? 0) + 44;
                     u(Math.min(Math.max(e - t, 160), 640));
                   }
                 }
               )
             ] }) : null,
-            /* @__PURE__ */ d("main", { className: "wb-main", children: [
-              W.length ? /* @__PURE__ */ a("div", { className: "wb-tabs", role: "tablist", children: W.map((e) => /* @__PURE__ */ d(
+            /* @__PURE__ */ f("main", { className: "wb-main", children: [
+              X.length ? /* @__PURE__ */ a("div", { className: "wb-tabs", role: "tablist", children: X.map((e) => /* @__PURE__ */ f(
                 "div",
                 {
                   role: "tab",
                   "aria-selected": e === $,
                   className: "wb-tab",
-                  "data-dirty": fe.has(e),
-                  "data-problem": pt.get(e),
+                  "data-dirty": he.has(e),
+                  "data-problem": gt.get(e),
                   title: e,
-                  onClick: () => q(e),
+                  onClick: () => z(e),
                   onAuxClick: (t) => {
-                    t.button === 1 && ut(e);
+                    t.button === 1 && dt(e);
                   },
                   onContextMenu: (t) => {
-                    t.preventDefault(), it({ x: t.clientX, y: t.clientY, path: e });
+                    t.preventDefault(), ct({ x: t.clientX, y: t.clientY, path: e });
                   },
                   children: [
-                    /* @__PURE__ */ a("span", { className: "wb-file-icon", children: Me(e) }),
-                    /* @__PURE__ */ a("span", { className: "wb-tab-label", children: E(e) }),
-                    /* @__PURE__ */ d(
+                    /* @__PURE__ */ a("span", { className: "wb-file-icon", children: Se(e) }),
+                    /* @__PURE__ */ a("span", { className: "wb-tab-label", children: O(e) }),
+                    /* @__PURE__ */ f(
                       "button",
                       {
                         type: "button",
                         className: "wb-tab-close",
-                        "aria-label": `Close ${E(e)}`,
+                        "aria-label": `Close ${O(e)}`,
                         onClick: (t) => {
-                          t.stopPropagation(), ut(e);
+                          t.stopPropagation(), dt(e);
                         },
                         children: [
                           /* @__PURE__ */ a("span", { className: "wb-dirty-dot" }),
-                          /* @__PURE__ */ a(v, { name: "close", className: "wb-close-icon" })
+                          /* @__PURE__ */ a(x, { name: "close", className: "wb-close-icon" })
                         ]
                       }
                     )
@@ -1220,36 +1277,36 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
                 },
                 e
               )) }) : null,
-              $ ? /* @__PURE__ */ a("div", { className: "wb-breadcrumbs", children: $.split("/").map((e, t) => /* @__PURE__ */ d(
+              $ ? /* @__PURE__ */ a("div", { className: "wb-breadcrumbs", children: $.split("/").map((e, t) => /* @__PURE__ */ f(
                 "span",
                 {
                   style: { display: "contents" },
                   children: [
-                    t ? /* @__PURE__ */ a(v, { name: "chevron-right" }) : null,
+                    t ? /* @__PURE__ */ a(x, { name: "chevron-right" }) : null,
                     /* @__PURE__ */ a("span", { children: e })
                   ]
                 },
                 `${t}:${e}`
               )) }) : null,
-              /* @__PURE__ */ a("div", { className: "wb-editor", children: A ? A.binary ? /* @__PURE__ */ a("div", { className: "wb-binary", children: ((Dt = o.renderBinary) == null ? void 0 : Dt.call(o, A)) ?? "This file isn't text and can't be shown in the editor." }) : oe ? /* @__PURE__ */ a("div", { className: "wb-editor-fill", children: /* @__PURE__ */ a(
-                Yt,
+              /* @__PURE__ */ a("div", { className: "wb-editor", children: K ? K.binary ? /* @__PURE__ */ a("div", { className: "wb-binary", children: ((Mt = o.renderBinary) == null ? void 0 : Mt.call(o, K)) ?? "This file isn't text and can't be shown in the editor." }) : oe ? /* @__PURE__ */ a("div", { className: "wb-editor-fill", children: /* @__PURE__ */ a(
+                Xt,
                 {
-                  path: he(A.path),
-                  language: ct(A.path),
+                  path: me(K.path),
+                  language: ut(K.path),
                   value: oe.text,
-                  theme: K === "dark" ? "vs-dark" : "vs",
+                  theme: j === "dark" ? "vs-dark" : "vs",
                   beforeMount: o.beforeMount,
                   onMount: (e, t) => {
                     var n;
-                    ae.current = e, nt(t), e.onDidChangeCursorPosition(
-                      (s) => st({
+                    L.current = e, lt(t), e.onDidChangeCursorPosition(
+                      (s) => ot({
                         line: s.position.lineNumber,
                         column: s.position.column
                       })
                     ), (n = o.onMount) == null || n.call(o, e, t);
                   },
                   onChange: (e) => {
-                    const t = A.path;
+                    const t = K.path;
                     re(
                       (n) => n[t] ? {
                         ...n,
@@ -1258,7 +1315,7 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
                     );
                   },
                   options: {
-                    readOnly: Ut,
+                    readOnly: Gt,
                     automaticLayout: !0,
                     fontSize: 13,
                     tabSize: 2,
@@ -1278,40 +1335,40 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
                     ...o.editorOptions
                   }
                 }
-              ) }) : /* @__PURE__ */ a("div", { className: "wb-welcome", children: "Loading…" }) : /* @__PURE__ */ d("div", { className: "wb-welcome", children: [
-                /* @__PURE__ */ a(v, { name: "code" }),
-                /* @__PURE__ */ d("dl", { children: [
+              ) }) : /* @__PURE__ */ a("div", { className: "wb-welcome", children: "Loading…" }) : /* @__PURE__ */ f("div", { className: "wb-welcome", children: [
+                /* @__PURE__ */ a(x, { name: "code" }),
+                /* @__PURE__ */ f("dl", { children: [
                   /* @__PURE__ */ a("dt", { children: "Go to File" }),
-                  /* @__PURE__ */ a("dd", { children: /* @__PURE__ */ d("span", { className: "wb-kbd", children: [
-                    H,
+                  /* @__PURE__ */ a("dd", { children: /* @__PURE__ */ f("span", { className: "wb-kbd", children: [
+                    Z,
                     "P"
                   ] }) }),
                   /* @__PURE__ */ a("dt", { children: "Save" }),
-                  /* @__PURE__ */ a("dd", { children: /* @__PURE__ */ d("span", { className: "wb-kbd", children: [
-                    H,
+                  /* @__PURE__ */ a("dd", { children: /* @__PURE__ */ f("span", { className: "wb-kbd", children: [
+                    Z,
                     "S"
                   ] }) }),
                   /* @__PURE__ */ a("dt", { children: "Toggle Side Bar" }),
-                  /* @__PURE__ */ a("dd", { children: /* @__PURE__ */ d("span", { className: "wb-kbd", children: [
-                    H,
+                  /* @__PURE__ */ a("dd", { children: /* @__PURE__ */ f("span", { className: "wb-kbd", children: [
+                    Z,
                     "B"
                   ] }) }),
                   /* @__PURE__ */ a("dt", { children: "Toggle Problems" }),
-                  /* @__PURE__ */ a("dd", { children: /* @__PURE__ */ d("span", { className: "wb-kbd", children: [
-                    H,
+                  /* @__PURE__ */ a("dd", { children: /* @__PURE__ */ f("span", { className: "wb-kbd", children: [
+                    Z,
                     "J"
                   ] }) })
                 ] })
               ] }) }),
-              D ? /* @__PURE__ */ d(ge, { children: [
+              M ? /* @__PURE__ */ f(ye, { children: [
                 /* @__PURE__ */ a(
-                  St,
+                  Et,
                   {
                     axis: "y",
                     onDrag: (e) => {
                       var n;
-                      const t = (n = ne.current) == null ? void 0 : n.getBoundingClientRect();
-                      t && Ie(
+                      const t = (n = p.current) == null ? void 0 : n.getBoundingClientRect();
+                      t && Ae(
                         Math.min(
                           Math.max(t.bottom - 22 - e, 80),
                           t.height - 160
@@ -1320,11 +1377,11 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
                     }
                   }
                 ),
-                /* @__PURE__ */ d("section", { className: "wb-panel", style: { height: Ne }, children: [
-                  /* @__PURE__ */ d("div", { className: "wb-panel-header", children: [
-                    /* @__PURE__ */ d("span", { className: "wb-panel-tab", children: [
+                /* @__PURE__ */ f("section", { className: "wb-panel", style: { height: ke }, children: [
+                  /* @__PURE__ */ f("div", { className: "wb-panel-header", children: [
+                    /* @__PURE__ */ f("span", { className: "wb-panel-tab", children: [
                       "Problems",
-                      O.length ? /* @__PURE__ */ a("span", { className: "wb-count", children: O.length }) : null
+                      F.length ? /* @__PURE__ */ a("span", { className: "wb-count", children: F.length }) : null
                     ] }),
                     /* @__PURE__ */ a("span", { style: { flex: 1 } }),
                     /* @__PURE__ */ a(
@@ -1334,40 +1391,40 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
                         className: "wb-icon-button",
                         title: "Close Panel",
                         "aria-label": "Close panel",
-                        onClick: () => j(!1),
-                        children: /* @__PURE__ */ a(v, { name: "close" })
+                        onClick: () => I(!1),
+                        children: /* @__PURE__ */ a(x, { name: "close" })
                       }
                     )
                   ] }),
-                  /* @__PURE__ */ a("div", { className: "wb-panel-body", children: O.length ? jt.map(([e, t]) => /* @__PURE__ */ d("div", { children: [
-                    /* @__PURE__ */ d("div", { className: "wb-problem-file", children: [
-                      /* @__PURE__ */ a("span", { className: "wb-file-icon", children: e ? Me(e) : /* @__PURE__ */ a(v, { name: "project" }) }),
-                      /* @__PURE__ */ a("span", { children: e ? E(e) : "Project" }),
+                  /* @__PURE__ */ a("div", { className: "wb-panel-body", children: F.length ? qt.map(([e, t]) => /* @__PURE__ */ f("div", { children: [
+                    /* @__PURE__ */ f("div", { className: "wb-problem-file", children: [
+                      /* @__PURE__ */ a("span", { className: "wb-file-icon", children: e ? Se(e) : /* @__PURE__ */ a(x, { name: "project" }) }),
+                      /* @__PURE__ */ a("span", { children: e ? O(e) : "Project" }),
                       /* @__PURE__ */ a("span", { className: "wb-quickopen-dir", children: e }),
                       /* @__PURE__ */ a("span", { className: "wb-count", children: t.length })
                     ] }),
                     t.map((n, s) => {
                       const g = n.severity ?? "error";
-                      return /* @__PURE__ */ d(
+                      return /* @__PURE__ */ f(
                         "button",
                         {
                           type: "button",
                           className: "wb-problem",
-                          disabled: !e || !Y.has(e),
-                          onClick: () => q(e, {
+                          disabled: !e || !_.has(e),
+                          onClick: () => z(e, {
                             line: n.line ?? 1,
                             column: n.column
                           }),
                           children: [
                             /* @__PURE__ */ a(
-                              v,
+                              x,
                               {
-                                name: nn[g],
+                                name: an[g],
                                 className: `wb-severity-${g}`
                               }
                             ),
                             /* @__PURE__ */ a("span", { className: "wb-problem-message", children: n.message }),
-                            n.line ? /* @__PURE__ */ d("span", { className: "wb-problem-position", children: [
+                            n.line ? /* @__PURE__ */ f("span", { className: "wb-problem-position", children: [
                               "[Ln ",
                               n.line,
                               n.column ? `, Col ${n.column}` : "",
@@ -1383,70 +1440,73 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
               ] }) : null
             ] })
           ] }),
-          /* @__PURE__ */ d("footer", { className: "wb-statusbar", children: [
-            /* @__PURE__ */ d("div", { className: "wb-status-group", children: [
-              /* @__PURE__ */ d(
+          /* @__PURE__ */ f("footer", { className: "wb-statusbar", children: [
+            /* @__PURE__ */ f("div", { className: "wb-status-group", children: [
+              /* @__PURE__ */ f(
                 "button",
                 {
                   type: "button",
                   className: "wb-status-item",
                   title: "Problems",
-                  onClick: () => j((e) => !e),
+                  onClick: () => I((e) => !e),
                   children: [
-                    /* @__PURE__ */ a(v, { name: "error" }),
-                    gt.error,
-                    /* @__PURE__ */ a(v, { name: "warning" }),
-                    gt.warning
+                    /* @__PURE__ */ a(x, { name: "error" }),
+                    yt.error,
+                    /* @__PURE__ */ a(x, { name: "warning" }),
+                    yt.warning
                   ]
                 }
               ),
-              ot ? /* @__PURE__ */ a("span", { className: "wb-status-item", "data-kind": "error", role: "alert", children: ot }) : Ot ? /* @__PURE__ */ d("span", { className: "wb-status-item", children: [
-                /* @__PURE__ */ a(v, { name: "sync" }),
+              it ? /* @__PURE__ */ a("span", { className: "wb-status-item", "data-kind": "error", role: "alert", children: it }) : Bt ? /* @__PURE__ */ f("span", { className: "wb-status-item", children: [
+                /* @__PURE__ */ a(x, { name: "sync" }),
                 " Saving…"
-              ] }) : _e ? /* @__PURE__ */ d("span", { className: "wb-status-item", children: [
-                de.length,
+              ] }) : Qe ? /* @__PURE__ */ f("span", { className: "wb-status-item", children: [
+                fe.length,
                 " unsaved"
               ] }) : null,
               o.statusLeft
             ] }),
-            /* @__PURE__ */ d("div", { className: "wb-status-group", "data-side": "right", children: [
+            /* @__PURE__ */ f("div", { className: "wb-status-group", "data-side": "right", children: [
               o.statusRight,
-              A && !A.binary ? /* @__PURE__ */ d(ge, { children: [
-                /* @__PURE__ */ d("span", { className: "wb-status-item", children: [
+              K && !K.binary ? /* @__PURE__ */ f(ye, { children: [
+                /* @__PURE__ */ f("span", { className: "wb-status-item", children: [
                   "Ln ",
-                  rt.line,
+                  st.line,
                   ", Col ",
-                  rt.column
+                  st.column
                 ] }),
                 /* @__PURE__ */ a("span", { className: "wb-status-item", children: "Spaces: 2" }),
                 /* @__PURE__ */ a("span", { className: "wb-status-item", children: "UTF-8" }),
-                /* @__PURE__ */ a("span", { className: "wb-status-item", children: ct(A.path) })
+                /* @__PURE__ */ a("span", { className: "wb-status-item", children: ut(K.path) })
               ] }) : null
             ] })
           ] }),
-          xe ? /* @__PURE__ */ a(
-            $t,
+          De ? /* @__PURE__ */ a(
+            Ot,
             {
-              x: xe.x,
-              y: xe.y,
-              items: Kt(xe.path),
-              onClose: () => it(null)
+              x: De.x,
+              y: De.y,
+              items: Ut(De.path),
+              onClose: () => ct(null)
             }
           ) : null,
-          C ? /* @__PURE__ */ a(
-            tn,
+          v !== null ? /* @__PURE__ */ a(
+            ln,
             {
+              start: v,
+              commands: Kt(),
               files: h,
-              recent: W,
-              icon: (e) => Me(e),
-              onOpen: (e) => q(e.path),
+              recent: X,
+              icon: (e) => Se(e),
+              onOpen: (e) => z(e.path),
               onClose: () => {
-                le(!1), setTimeout(() => {
+                ne(null), setTimeout(() => {
                   var e;
-                  return (e = ae.current) == null ? void 0 : e.focus();
+                  return (e = L.current) == null ? void 0 : e.focus();
                 }, 0);
               }
-            }
+            },
+            v
           ) : null
         ]
       }
@@ -1454,8 +1514,8 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
   }
 );
 export {
-  v as Icon,
-  on as Workbench,
-  Zt as defaultFileIcon,
-  Ht as guessLanguage
+  x as Icon,
+  un as Workbench,
+  tn as defaultFileIcon,
+  Jt as guessLanguage
 };
