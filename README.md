@@ -4,6 +4,8 @@ A VS Code style workbench for React: activity bar, explorer, tabs, a Monaco
 editor, a problems panel and a status bar. You give it a list of files and how
 to read and save one; it keeps the open tabs, unsaved text and layout itself.
 
+![The workbench with three open tabs and the problems panel](docs/workbench.jpg)
+
 ## Install
 
 ```bash
