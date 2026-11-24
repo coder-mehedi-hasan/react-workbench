@@ -63,6 +63,7 @@ and JSON schemas in `beforeMount`.
 | `problems` | `{ path?, message, severity?, line?, column? }[]`. Listed in the panel, counted in the status bar, coloured in the tree and tabs, underlined in the editor when they have a line. |
 | `theme` | `"dark"` (default) or `"light"`. |
 | `readOnly` | Nothing can be changed. |
+| `optimisticSave` | Show a file as saved as soon as a save starts, and as unsaved again if `onSave` throws. `onDirtyChange` and `dirtyPaths()` still wait for `onSave` to finish. Off by default. |
 | `language(path)` | Monaco language id. Defaults to a guess from the extension. |
 | `fileIcon(path, { folder, open })` | Your own icon for a file or folder. |
 | `renderBinary(file)` | What to show for a `binary` file, such as an image preview. |

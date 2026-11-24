@@ -31,7 +31,8 @@ import {
 } from "./util";
 import "./workbench.css";
 
-type Buffer = { text: string; saved: string };
+/** `storing` is the text on its way to the host under `optimisticSave`. */
+type Buffer = { text: string; saved: string; storing?: string };
 type Severity = NonNullable<WorkbenchProblem["severity"]>;
 
 const EXPLORER = "explorer";
@@ -101,6 +102,7 @@ export const Workbench = forwardRef<WorkbenchHandle, WorkbenchProps>(
       problems = [],
       theme = "dark",
       readOnly = false,
+      optimisticSave = false,
       modelScope = "workbench",
     } = props;
 
@@ -133,6 +135,7 @@ export const Workbench = forwardRef<WorkbenchHandle, WorkbenchProps>(
     live.current = { buffers, activePath, openPaths, files };
     const loading = useRef(new Set<string>());
     const savingPaths = useRef(new Set<string>());
+    const saveAgain = useRef(new Set<string>());
     const pendingReveal = useRef<{
       path: string;
       line: number;
@@ -181,6 +184,17 @@ export const Workbench = forwardRef<WorkbenchHandle, WorkbenchProps>(
       [buffers],
     );
     const dirtySet = useMemo(() => new Set(dirtyPaths), [dirtyPaths]);
+    // What the tabs, the tree and the status bar show. With `optimisticSave` a
+    // save counts at once here and comes back as unsaved if it wasn't stored.
+    const unsavedSet = useMemo(
+      () =>
+        new Set(
+          Object.entries(buffers)
+            .filter(([, buffer]) => buffer.text !== (buffer.storing ?? buffer.saved))
+            .map(([path]) => path),
+        ),
+      [buffers],
+    );
 
     const { onActiveFileChange, onDirtyChange } = props;
     useEffect(() => {
@@ -317,30 +331,45 @@ export const Workbench = forwardRef<WorkbenchHandle, WorkbenchProps>(
       async (path: string | null = live.current.activePath) => {
         const buffer = path ? live.current.buffers[path] : undefined;
         if (!path || !buffer || !onSave || readOnly) return false;
-        if (buffer.text === buffer.saved || savingPaths.current.has(path)) {
+        if (buffer.text === buffer.saved) return false;
+        if (savingPaths.current.has(path)) {
+          // One save per file at a time: newer text goes out when this one lands.
+          if (buffer.text !== buffer.storing) saveAgain.current.add(path);
           return false;
         }
         const text = buffer.text;
+        const settle = (stored: boolean) =>
+          setBuffers((current) => {
+            const now = current[path];
+            if (!now) return current;
+            const { storing: _storing, ...rest } = now;
+            return { ...current, [path]: stored ? { ...rest, saved: text } : rest };
+          });
         savingPaths.current.add(path);
         setSaving(true);
         setNotice(null);
-        try {
-          await onSave(path, text);
+        if (optimisticSave) {
           setBuffers((current) =>
             current[path]
-              ? { ...current, [path]: { ...current[path]!, saved: text } }
+              ? { ...current, [path]: { ...current[path]!, storing: text } }
               : current,
           );
+        }
+        try {
+          await onSave(path, text);
+          settle(true);
           return true;
         } catch (error) {
+          settle(false);
           setNotice(`Couldn't save ${baseName(path)}: ${messageOf(error)}`);
           return false;
         } finally {
           savingPaths.current.delete(path);
           setSaving(savingPaths.current.size > 0);
+          if (saveAgain.current.delete(path)) setTimeout(() => void save(path), 0);
         }
       },
-      [onSave, readOnly],
+      [onSave, optimisticSave, readOnly],
     );
 
     const saveAll = useCallback(async () => {
@@ -1055,7 +1084,7 @@ export const Workbench = forwardRef<WorkbenchHandle, WorkbenchProps>(
                           treeFocus.current = focus;
                         }}
                         activePath={activePath}
-                        dirtyPaths={dirtySet}
+                        dirtyPaths={unsavedSet}
                         problemOf={(path) => worst.get(path)}
                         icon={iconOf}
                         collapsed={collapsed}
@@ -1102,7 +1131,7 @@ export const Workbench = forwardRef<WorkbenchHandle, WorkbenchProps>(
                     role="tab"
                     aria-selected={path === activePath}
                     className="wb-tab"
-                    data-dirty={dirtySet.has(path)}
+                    data-dirty={unsavedSet.has(path)}
                     data-problem={worst.get(path)}
                     title={path}
                     onClick={() => open(path)}
@@ -1343,8 +1372,8 @@ export const Workbench = forwardRef<WorkbenchHandle, WorkbenchProps>(
               <span className="wb-status-item">
                 <Icon name="sync" /> Saving…
               </span>
-            ) : hasDirty ? (
-              <span className="wb-status-item">{dirtyPaths.length} unsaved</span>
+            ) : unsavedSet.size ? (
+              <span className="wb-status-item">{unsavedSet.size} unsaved</span>
             ) : null}
             {props.statusLeft}
           </div>

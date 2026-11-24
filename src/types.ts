@@ -103,6 +103,12 @@ export type WorkbenchProps = {
   theme?: "dark" | "light";
   /** Nothing can be edited, saved, created, renamed or deleted. */
   readOnly?: boolean;
+  /**
+   * Show a file as saved the moment a save starts, and as unsaved again if
+   * `onSave` throws. `onDirtyChange` and `dirtyPaths()` still count it as
+   * unsaved until `onSave` has finished. Off by default.
+   */
+  optimisticSave?: boolean;
 
   /** Monaco language id for a path. Defaults to a guess from the extension. */
   language?: (path: string) => string | undefined;

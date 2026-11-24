@@ -1,6 +1,6 @@
 {
   "name": "@workbenchkit/react",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A VS Code style workbench for React: activity bar, explorer, tabs, Monaco editor, problems panel and status bar.",
   "type": "module",
   "license": "MIT",
