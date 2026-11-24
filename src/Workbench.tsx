@@ -354,7 +354,10 @@ export const Workbench = forwardRef<WorkbenchHandle, WorkbenchProps>(
 
     const reload = useCallback(
       (path?: string) => {
-        const paths = path ? [path] : live.current.openPaths;
+        // Only files that still exist: a tab whose file is gone is closing.
+        const paths = (path ? [path] : live.current.openPaths).filter((each) =>
+          filesByPath.has(each),
+        );
         setBuffers((current) => {
           const next = { ...current };
           for (const each of paths) delete next[each];

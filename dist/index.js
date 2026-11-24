@@ -1,6 +1,6 @@
 import { jsx as a, jsxs as d, Fragment as ge } from "react/jsx-runtime";
 import Yt from "@monaco-editor/react";
-import { useRef as R, useState as x, useEffect as z, useMemo as V, forwardRef as Vt, useCallback as Y, useImperativeHandle as Gt } from "react";
+import { useRef as R, useState as x, useEffect as z, useMemo as G, forwardRef as Vt, useCallback as V, useImperativeHandle as Gt } from "react";
 const E = (r) => r.split("/").pop() ?? r, _ = (r) => r.includes("/") ? r.slice(0, r.lastIndexOf("/")) : "", Xt = {
   ts: "typescript",
   tsx: "typescript",
@@ -211,7 +211,7 @@ function Mt({
   );
 }
 function en(r) {
-  const { files: o, edit: m, collapsed: h } = r, b = V(
+  const { files: o, edit: m, collapsed: h } = r, b = G(
     () => _t(o, r.emptyFolders),
     [o, r.emptyFolders]
   ), [N, c] = x(null), [w, i] = x(null);
@@ -446,7 +446,7 @@ function tn({
   onOpen: h,
   onClose: b
 }) {
-  const [N, c] = x(""), [w, i] = x(0), p = R(null), k = V(() => {
+  const [N, c] = x(""), [w, i] = x(0), p = R(null), k = G(() => {
     if (!N.trim()) {
       const f = new Map(o.map((M, B) => [M, B]));
       return [...r].sort(
@@ -560,13 +560,13 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
       modelScope: Z = "workbench"
     } = o, ne = R(null), ae = R(null), [T, nt] = x(null), [ye, l] = x(je), [y, u] = x(260), [D, j] = x(!1), [Ne, Ie] = x(200), [C, le] = x(!1), [W, Ae] = x([]), [$, qe] = x(null), [ie, re] = x({}), [Ft, se] = x(/* @__PURE__ */ new Set()), [Et, ee] = x(null), [Ke, ke] = x(/* @__PURE__ */ new Set()), [at, lt] = x(!1), ze = R(null), [rt, st] = x({ line: 1, column: 1 }), [ot, L] = x(null), [Ot, ve] = x(!1), I = R({ buffers: ie, activePath: $, openPaths: W, files: h });
     I.current = { buffers: ie, activePath: $, openPaths: W, files: h };
-    const We = R(/* @__PURE__ */ new Set()), ce = R(/* @__PURE__ */ new Set()), Ue = R(null), Ye = R(null), Ve = R(/* @__PURE__ */ new Set()), [U, Ce] = x(null), [xe, it] = x(null), G = V(
+    const We = R(/* @__PURE__ */ new Set()), ce = R(/* @__PURE__ */ new Set()), Ue = R(null), Ye = R(null), Ve = R(/* @__PURE__ */ new Set()), [U, Ce] = x(null), [xe, it] = x(null), Y = G(
       () => new Map(h.map((e) => [e.path, e])),
       [h]
-    ), A = $ ? G.get($) ?? null : null, ue = V(
+    ), A = $ ? Y.get($) ?? null : null, ue = G(
       () => Pt(h.map((e) => e.path)),
       [h]
-    ), Ge = V(
+    ), Ge = G(
       () => [.../* @__PURE__ */ new Set([...o.folders ?? [], ...Ke])],
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [o.folders, Ke]
@@ -577,10 +577,10 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
         return t.length === e.size ? e : new Set(t);
       });
     }, [ue]);
-    const oe = $ ? ie[$] : void 0, de = V(
+    const oe = $ ? ie[$] : void 0, de = G(
       () => Object.entries(ie).filter(([, e]) => e.text !== e.saved).map(([e]) => e),
       [ie]
-    ), fe = V(() => new Set(de), [de]), { onActiveFileChange: De, onDirtyChange: Pe } = o;
+    ), fe = G(() => new Set(de), [de]), { onActiveFileChange: De, onDirtyChange: Pe } = o;
     z(() => {
       De == null || De($), st({ line: 1, column: 1 });
     }, [$, De]);
@@ -591,24 +591,24 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
 `) : []),
       [Xe, Pe]
     );
-    const ct = Y(
+    const ct = V(
       (e) => {
         var t;
         return ((t = o.language) == null ? void 0 : t.call(o, e)) ?? Ht(e);
       },
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [o.language]
-    ), Me = Y(
+    ), Me = V(
       (e, t = { folder: !1, open: !1 }) => {
         var n;
         return ((n = o.fileIcon) == null ? void 0 : n.call(o, e, t)) ?? Zt(e, t);
       },
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [o.fileIcon]
-    ), he = Y(
+    ), he = V(
       (e) => `file:///${Z}/${e}`,
       [Z]
-    ), Se = Y(
+    ), Se = V(
       (e) => {
         We.current.has(e) || (We.current.add(e), b(e).then(
           (t) => re((n) => ({
@@ -620,7 +620,7 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
         }).finally(() => We.current.delete(e)));
       },
       [b]
-    ), q = Y(
+    ), q = V(
       (e, t) => {
         const n = I.current.files.find((s) => s.path === e);
         if (!n) {
@@ -636,13 +636,13 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
         }), !n.binary && !I.current.buffers[e] && Se(e);
       },
       [Se]
-    ), me = Y(
+    ), me = V(
       (e) => {
         var t;
         (t = T == null ? void 0 : T.editor.getModel(T.Uri.parse(he(e)))) == null || t.dispose();
       },
       [T, he]
-    ), be = Y(
+    ), be = V(
       (e) => {
         if (!e.length) return;
         const t = new Set(e);
@@ -668,13 +668,13 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
     z(() => {
       be(
         I.current.openPaths.filter(
-          (t) => !G.has(t) && !Ve.current.has(t)
+          (t) => !Y.has(t) && !Ve.current.has(t)
         )
       );
       const e = Ye.current;
-      e && G.has(e) && (Ye.current = null, q(e));
-    }, [G, be, q]);
-    const we = Y(
+      e && Y.has(e) && (Ye.current = null, q(e));
+    }, [Y, be, q]);
+    const we = V(
       async (e = I.current.activePath) => {
         const t = e ? I.current.buffers[e] : void 0;
         if (!e || !t || !N || J || t.text === t.saved || ce.current.has(e))
@@ -692,24 +692,26 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
         }
       },
       [N, J]
-    ), He = Y(async () => (await Promise.all(
+    ), He = V(async () => (await Promise.all(
       Object.keys(I.current.buffers).map((t) => {
         const n = I.current.buffers[t];
         return n.text === n.saved ? !0 : we(t);
       })
-    )).every(Boolean), [we]), dt = Y(
+    )).every(Boolean), [we]), dt = V(
       (e) => {
         var n;
-        const t = e ? [e] : I.current.openPaths;
+        const t = (e ? [e] : I.current.openPaths).filter(
+          (s) => Y.has(s)
+        );
         re((s) => {
           const g = { ...s };
           for (const S of t) delete g[S];
           return g;
         });
         for (const s of t)
-          me(s), (n = G.get(s)) != null && n.binary || Se(s);
+          me(s), (n = Y.get(s)) != null && n.binary || Se(s);
       },
-      [me, G, Se]
+      [me, Y, Se]
     );
     Gt(
       m,
@@ -722,7 +724,7 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
       }),
       [q, dt, we, He]
     );
-    const $e = (e) => ue.has(e) || Ge.includes(e), Fe = (e) => G.has(e) || $e(e), Tt = (e) => {
+    const $e = (e) => ue.has(e) || Ge.includes(e), Fe = (e) => Y.has(e) || $e(e), Tt = (e) => {
       Ae((t) => t.map((n) => e.get(n) ?? n)), qe((t) => t && (e.get(t) ?? t)), re((t) => {
         const n = {};
         for (const [s, g] of Object.entries(t))
@@ -793,7 +795,7 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
         if (f)
           await f(t, S);
         else {
-          if ((s = G.get(t)) != null && s.binary || !c)
+          if ((s = Y.get(t)) != null && s.binary || !c)
             throw new Error(`${E(t)} can't be copied here`);
           {
             const F = ((g = I.current.buffers[t]) == null ? void 0 : g.saved) ?? await b(t);
@@ -847,7 +849,7 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
       } catch (t) {
         L(te(t));
       }
-    }, pt = V(() => {
+    }, pt = G(() => {
       const e = /* @__PURE__ */ new Map();
       for (const t of O) {
         if (!t.path || t.severity === "info") continue;
@@ -855,11 +857,11 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
         e.get(t.path) !== "error" && e.set(t.path, n);
       }
       return e;
-    }, [O]), gt = V(() => {
+    }, [O]), gt = G(() => {
       const e = { error: 0, warning: 0, info: 0 };
       for (const t of O) e[t.severity ?? "error"]++;
       return e;
-    }, [O]), jt = V(() => {
+    }, [O]), jt = G(() => {
       const e = /* @__PURE__ */ new Map();
       for (const t of O) {
         const n = t.path ?? "";
@@ -1351,7 +1353,7 @@ const te = (r) => r instanceof Error ? r.message : String(r), on = Vt(
                         {
                           type: "button",
                           className: "wb-problem",
-                          disabled: !e || !G.has(e),
+                          disabled: !e || !Y.has(e),
                           onClick: () => q(e, {
                             line: n.line ?? 1,
                             column: n.column
