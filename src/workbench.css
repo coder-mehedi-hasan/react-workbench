@@ -804,3 +804,18 @@ button.wb-status-item:hover {
 .wb-tree-row[data-cut="true"] {
   opacity: 0.5;
 }
+
+/* A host's own file icon is always icon sized, wherever it is shown. */
+.wb .wb-file-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  flex: none;
+}
+.wb .wb-file-icon img,
+.wb .wb-file-icon svg {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
