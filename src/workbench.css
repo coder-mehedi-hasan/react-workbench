@@ -61,9 +61,10 @@
 /*
  * Only the workbench's own buttons (every one has a `wb-` class). A host's
  * buttons in the slots are left alone: a blanket `.wb button` reset would beat
- * layered styles such as Tailwind's, whatever its specificity.
+ * layered styles such as Tailwind's, whatever its specificity. `:where` keeps
+ * the reset as weak as `.wb button`, so a selected row still gets its colour.
  */
-.wb button[class*="wb-"] {
+.wb button:where([class*="wb-"]) {
   font: inherit;
   color: inherit;
   background: none;
