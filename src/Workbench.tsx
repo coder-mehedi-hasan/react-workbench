@@ -220,7 +220,12 @@ export const Workbench = forwardRef<WorkbenchHandle, WorkbenchProps>(
               [path]: { text, saved: text },
             })),
           )
-          .catch((error) => setNotice(`Couldn't open ${path}: ${messageOf(error)}`))
+          .catch((error) => {
+            // A file removed while it was being read isn't worth reporting.
+            if (live.current.files.some((file) => file.path === path)) {
+              setNotice(`Couldn't open ${path}: ${messageOf(error)}`);
+            }
+          })
           .finally(() => loading.current.delete(path));
       },
       [readFile],
