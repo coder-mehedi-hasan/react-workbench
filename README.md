@@ -101,11 +101,21 @@ Every item appears only when the matching prop is given, and nothing that change
 | --- | --- |
 | ⌘/Ctrl+S | Save the open file |
 | ⌘/Ctrl+Shift+S | Save all |
-| ⌘/Ctrl+P | Go to file |
+| ⌘/Ctrl+P | Go to file. Type `>` there to list commands instead |
+| ⌘/Ctrl+Shift+P | Commands: the workbench's own and the open editor's |
+| ↑ / ↓, Enter, Esc | Choose, open or run, close in Go to file |
+| F1 | Monaco's own command palette, with the cursor in the editor |
 | ⌘/Ctrl+B | Toggle the side bar |
 | ⌘/Ctrl+J | Toggle the problems panel |
-| F2 / Delete | Rename / delete the focused row in the explorer |
+| ↑ / ↓ | Move between rows in the explorer |
+| → / ← | Open a folder / close it or go to its parent |
+| Enter | Open the focused file, or open and close the focused folder |
+| F2 | Rename the focused row in the explorer |
+| Delete, ⌘+Backspace | Delete the focused row in the explorer |
 | ⌘/Ctrl+C, X, V | Copy, cut, paste in the explorer |
+
+The ⌘/Ctrl shortcuts work anywhere in the workbench, and on a page where
+nothing has focus yet. The explorer ones need a row focused.
 
 ## Theming
 
